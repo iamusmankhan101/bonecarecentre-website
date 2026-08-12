@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import logo from './assets/logo.jpg'
 
 // Target launch date — change this to your real launch.
 const LAUNCH_DATE = new Date('2026-10-01T09:00:00+04:00')
@@ -85,18 +86,13 @@ export default function ComingSoon() {
       <div className="glow" aria-hidden="true" />
 
       <header className="brand">
-        <svg className="mark" viewBox="0 0 48 48" role="img" aria-label="Bone Care Centre">
-          <path
-            d="M14 10a6 6 0 0 1 6 6v16a6 6 0 1 1-6-6h20a6 6 0 1 1-6 6V16a6 6 0 1 1 6 6H14a6 6 0 0 1-6-6 6 6 0 0 1 6-6Z"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span className="brand-name">
-          Bone Care <span>Centre</span>
-        </span>
+        <img
+          className="logo"
+          src={logo}
+          alt="Bone Care Centre — stronger bones, better life"
+          width="1254"
+          height="1254"
+        />
       </header>
 
       <section className="hero">
@@ -129,18 +125,6 @@ export default function ComingSoon() {
           </li>
         </ul>
       </section>
-
-      <footer className="footer">
-        <a href="tel:+97100000000">+971 00 000 0000</a>
-        <span className="dot" aria-hidden="true">
-          •
-        </span>
-        <a href="mailto:hello@bonecarecentre.com">hello@bonecarecentre.com</a>
-        <span className="dot" aria-hidden="true">
-          •
-        </span>
-        <span>Dubai, UAE</span>
-      </footer>
     </main>
   )
 }
