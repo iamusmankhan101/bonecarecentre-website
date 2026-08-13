@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import logo from './assets/logo.jpg'
+import logo from './assets/logo.png'
 
 // Target launch date — change this to your real launch.
 const LAUNCH_DATE = new Date('2026-10-01T09:00:00+04:00')
@@ -89,9 +89,9 @@ export default function ComingSoon() {
         <img
           className="logo"
           src={logo}
-          alt="Bone Care Centre — stronger bones, better life"
-          width="1254"
-          height="1254"
+          alt="Bone Care Centre — strong bones, healthy joints, better life"
+          width="500"
+          height="500"
         />
       </header>
 
