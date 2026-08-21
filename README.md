@@ -18,8 +18,11 @@ Requires Node 18+.
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | HTML shell, fonts, meta tags |
-| `src/main.jsx` | React entry point — swap the rendered component to change the live page (currently `ComingSoon`) |
+| `index.html` | Shell for the live coming-soon page |
+| `home.html` | Shell for the homepage preview, served at `/home` |
+| `src/main.jsx` | Entry for `index.html` — renders `ComingSoon` |
+| `src/home-entry.jsx` | Entry for `home.html` — renders `Home` |
+| `vercel.json` | `cleanUrls`, so `home.html` is served at `/home` |
 | `src/Home.jsx` | Homepage: header, hero, about, core values, stats, services, choose-us, CTA, footer |
 | `src/home.css` | All homepage styles |
 | `src/ComingSoon.jsx` | Coming-soon page (live): countdown, email capture, service pillars |
@@ -32,9 +35,11 @@ Requires Node 18+.
 | `public/choose-us.jpg` | Portrait in the Choose Us section — placeholder |
 | `public/favicon.png` | Favicon, cropped from the logo emblem |
 
-To put the homepage live, change the import and the rendered element in `src/main.jsx` from
-`ComingSoon` to `Home`, and switch the `<title>` and description in `index.html` back to the
-site copy ("Orthopaedic, Spine & Joint Care").
+The build produces two pages: `/` (coming-soon) and `/home` (the full homepage, marked
+`noindex` while it is a preview). To put the homepage on the root, change the import and the
+rendered element in `src/main.jsx` from `ComingSoon` to `Home`, copy the `<title>` and
+description from `home.html` into `index.html`, and drop `home.html`, `src/home-entry.jsx` and
+the extra `input` entry in `vite.config.js`.
 
 ## Brand colours
 
