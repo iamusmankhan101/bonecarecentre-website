@@ -1,7 +1,7 @@
 # Bone Care Centre — Website
 
-Website for Bone Care Centre, built with React 18 + Vite 5. `npm run dev` serves the
-homepage; the original coming-soon page is still in the repo (see below).
+Website for Bone Care Centre, built with React 18 + Vite 5. The coming-soon page is what
+currently goes live; the full homepage is built and waiting in `src/Home.jsx` (see below).
 
 ## Getting started
 
@@ -19,10 +19,10 @@ Requires Node 18+.
 | Path | Purpose |
 | --- | --- |
 | `index.html` | HTML shell, fonts, meta tags |
-| `src/main.jsx` | React entry point — swap the rendered component to change the live page |
+| `src/main.jsx` | React entry point — swap the rendered component to change the live page (currently `ComingSoon`) |
 | `src/Home.jsx` | Homepage: header, hero, about, core values, stats, services, choose-us, CTA, footer |
 | `src/home.css` | All homepage styles |
-| `src/ComingSoon.jsx` | Legacy coming-soon page: countdown, email capture, service pillars |
+| `src/ComingSoon.jsx` | Coming-soon page (live): countdown, email capture, service pillars |
 | `src/coming-soon.css` | Styles for that page only (its selectors would otherwise clash with the homepage) |
 | `src/index.css` | Shared theme tokens, reset, global rules |
 | `src/assets/logo.png` | Brand lockup (emblem + wordmark + tagline) |
@@ -32,8 +32,9 @@ Requires Node 18+.
 | `public/choose-us.jpg` | Portrait in the Choose Us section — placeholder |
 | `public/favicon.png` | Favicon, cropped from the logo emblem |
 
-To put the coming-soon page back, change the import and the rendered element in
-`src/main.jsx` from `Home` to `ComingSoon`.
+To put the homepage live, change the import and the rendered element in `src/main.jsx` from
+`ComingSoon` to `Home`, and switch the `<title>` and description in `index.html` back to the
+site copy ("Orthopaedic, Spine & Joint Care").
 
 ## Brand colours
 
@@ -132,7 +133,7 @@ The arrow buttons step by one card in both modes: sideways via `scrollBy` when i
 and while pinned by scrolling the *page* by the slice of the pin that moves the track that far.
 They disable themselves at each end.
 
-Coming-soon page (only relevant if you switch back to it):
+Coming-soon page (what is live today):
 
 - **Launch date** — `LAUNCH_DATE` in `src/ComingSoon.jsx` (currently 1 Oct 2026).
 - **Email signup** — `NotifyForm` has no backend; it only shows a confirmation message. Wire `handleSubmit` to a real endpoint (Mailchimp, Formspree, or your own API).
