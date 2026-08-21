@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import logo from './assets/logo.png'
+import './coming-soon.css'
 
 // Target launch date — change this to your real launch.
 const LAUNCH_DATE = new Date('2026-10-01T09:00:00+04:00')

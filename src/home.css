@@ -1,0 +1,1407 @@
+/* Homepage + hero. Brand tokens live in index.css; this file only adds page styles. */
+.home {
+  overflow-x: clip;
+  --hero-ink: #ffffff;
+  --glass: rgba(255, 255, 255, 0.14);
+  --glass-line: rgba(255, 255, 255, 0.32);
+  --radius: 26px;
+  color: var(--ink);
+}
+
+.home main {
+  display: block;
+}
+
+.shell {
+  width: min(1280px, 100% - 3rem);
+  margin-inline: auto;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 1.4rem 0.5rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+  color: #fff;
+  box-shadow: 0 16px 34px -18px rgba(2, 132, 154, 0.9);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 22px 44px -18px rgba(2, 132, 154, 0.95);
+}
+
+.btn-ghost {
+  padding-inline: 1.4rem;
+  background: var(--glass);
+  border-color: var(--glass-line);
+  color: #fff;
+  backdrop-filter: blur(14px);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.btn-outline {
+  padding-inline: 1.4rem;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-lg {
+  font-size: 1.02rem;
+  padding-block: 0.55rem;
+}
+
+.arrow-badge {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--teal);
+  flex: none;
+}
+
+.arrow-badge svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* ---------- header ---------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  padding: 1.1rem 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+
+.site-header.is-stuck,
+.site-header.is-open {
+  background: rgba(6, 30, 56, 0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px -30px rgba(0, 0, 0, 0.9);
+  padding: 0.7rem 0;
+}
+
+.header-inner {
+  width: min(1280px, 100% - 3rem);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* The supplied artwork is a 500×500 badge; this window crops it down to the emblem. */
+.brand-mark {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 14px;
+  overflow: hidden;
+  flex: none;
+  background: #0a2340;
+  display: block;
+  position: relative;
+}
+
+.brand-mark img {
+  position: absolute;
+  width: 205%;
+  left: -52%;
+  top: -8%;
+  max-width: none;
+}
+
+.brand-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.site-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a,
+.site-nav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: rgba(255, 255, 255, 0.82);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav button:hover,
+.site-nav a.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.caret {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform 0.2s ease;
+}
+
+.has-menu {
+  position: relative;
+}
+
+.has-menu:hover .caret,
+.has-menu:focus-within .caret {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translate(-50%, 8px);
+  display: block;
+  min-width: 12rem;
+  padding: 0.5rem;
+  border-radius: 18px;
+  background: rgba(6, 30, 56, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 26px 50px -28px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.has-menu:hover .submenu,
+.has-menu:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.submenu a {
+  display: block;
+  border-radius: 12px;
+  padding: 0.55rem 0.8rem;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.mobile-panel {
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: min(1280px, 100% - 3rem);
+  margin: 1rem auto 0.4rem;
+}
+
+.mobile-panel a {
+  padding: 0.75rem 0.4rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-panel .btn {
+  margin-top: 0.9rem;
+  align-self: flex-start;
+  border-bottom: 0;
+  color: #fff;
+}
+
+/* ---------- hero ---------- */
+/* Entrance: everything in the hero lifts into place once, on load. The headline
+   slides up behind its own mask; the rest fades up on a short stagger. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem);
+  }
+}
+
+@keyframes hero-line {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.hero {
+  --scrolled: 0;
+  position: relative;
+  min-height: min(100svh, 980px);
+  display: flex;
+  align-items: flex-end;
+  padding: 9rem 0 3rem;
+  overflow: hidden;
+  color: var(--hero-ink);
+  isolation: isolate;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  animation: hero-fade 1.2s ease both;
+}
+
+/* The photo is wider than the viewport and anchored left, which pushes the
+   subject into the right half and keeps the headline clear of their face.
+   It also drifts and creeps closer as the page scrolls away from the hero. */
+.hero-media img {
+  width: 132%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left 24%;
+  transform: translateY(calc(var(--scrolled) * 4rem)) scale(calc(1 + var(--scrolled) * 0.06));
+  will-change: transform;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(4, 24, 46, 0.94) 0%, rgba(4, 24, 46, 0.78) 34%, rgba(4, 24, 46, 0.22) 62%, rgba(4, 24, 46, 0.08) 100%),
+    linear-gradient(180deg, rgba(4, 24, 46, 0.72) 0%, rgba(4, 24, 46, 0) 32%, rgba(4, 24, 46, 0.45) 100%);
+}
+
+.hero-inner {
+  width: min(1280px, 100% - 3rem);
+  margin-inline: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.hero-copy {
+  max-width: 44rem;
+  /* Recedes rather than simply scrolling off, so the section below arrives cleanly. */
+  opacity: calc(1 - var(--scrolled) * 0.85);
+  transform: translateY(calc(var(--scrolled) * -2rem));
+}
+
+.eyebrow {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) 0.1s both;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 2.2rem;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.asterisk {
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: none;
+  opacity: 0.9;
+}
+
+.hero h1 .line {
+  display: block;
+  overflow: hidden;
+  /* The mask would otherwise cut the descenders off the line it is masking. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.hero h1 .line-in {
+  display: block;
+  animation: hero-line 0.9s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+  animation-delay: calc(0.22s + var(--i) * 0.1s);
+}
+
+.hero h1 {
+  margin: 0 0 2rem;
+  font-size: clamp(2.9rem, 7vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 1.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  animation: hero-rise 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+  animation-delay: calc(0.5s + var(--i) * 0.07s);
+  padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+}
+
+.hero-lede {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) 0.72s both;
+  margin: 0 0 2rem;
+  max-width: 38rem;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-actions {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) 0.84s both;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.rating-card {
+  animation: hero-rise 0.9s cubic-bezier(0.22, 0.8, 0.3, 1) 0.95s both;
+  flex: none;
+  width: 20rem;
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-line);
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.8);
+}
+
+.rating-score {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin: 0 0 1.1rem;
+  font-size: 4.2rem;
+  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.rating-score .star {
+  font-size: 1.4rem;
+  color: #ffd166;
+}
+
+.rating-foot {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatars {
+  display: flex;
+}
+
+.avatars i {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-left: -0.7rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.avatars i:first-child {
+  margin-left: 0;
+}
+
+.avatars .a1 {
+  background: linear-gradient(140deg, #1492a1, #02849a);
+}
+.avatars .a2 {
+  background: linear-gradient(140deg, #0d4478, #062f5b);
+}
+.avatars .a3 {
+  background: linear-gradient(140deg, #6cc24a, #2f9e6d);
+}
+.avatars .a-plus {
+  background: #fff;
+  color: var(--teal);
+  font-size: 1.1rem;
+}
+
+.rating-label {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---------- about ---------- */
+.about {
+  /* Set by useRevealProgress on scroll; everything below inherits it. */
+  --reveal: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 0 7.5rem;
+  background: #fff;
+}
+
+.about-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 62rem;
+}
+
+.pill-label {
+  margin: 0 0 2rem;
+  padding: 0.5rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 24px -18px rgba(6, 47, 91, 0.6);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.reveal {
+  margin: 0 0 2.5rem;
+  max-width: 46rem;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.reveal-word {
+  color: var(--navy);
+  /* Each word lights up as the reveal front passes its index; the /4 softens the edge. */
+  opacity: clamp(0.16, calc((var(--reveal) * (var(--total) + 8) - var(--i)) / 4), 1);
+  transition: opacity 0.25s linear;
+}
+
+.about-photos {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.about-photo {
+  /* Written by useScrollProgress from the photo's own position; the 1 here is the
+     resting state, so the photos are visible if the script never runs. */
+  --p: 1;
+  --dir: -1;
+  --rot: -7deg;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: clamp(11rem, 17vw, 15.5rem);
+  margin: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(6, 47, 91, 0.55);
+  opacity: var(--p);
+  /* Rises and slides in from its own side, unwinding an extra turn of tilt as it lands. */
+  transform: translateY(-50%)
+    translate(calc(var(--dir) * (1 - var(--p)) * 5rem), calc((1 - var(--p)) * 2rem))
+    rotate(calc(var(--rot) * (2 - var(--p)))) scale(calc(0.88 + var(--p) * 0.12));
+  transition: opacity 0.25s linear, transform 0.25s linear;
+  will-change: transform, opacity;
+}
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.about-photo-left {
+  left: clamp(1rem, 5vw, 5.5rem);
+}
+
+.about-photo-right {
+  --dir: 1;
+  --rot: 6deg;
+  right: clamp(1rem, 5vw, 5.5rem);
+}
+
+/* ---------- core values ---------- */
+.values {
+  --reveal: 0;
+  padding: 6rem 0 6.5rem;
+  background: #fff;
+}
+
+.values-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.values-grid {
+  /* Sits left of the copy, but after it in the source so the heading leads on narrow screens. */
+  order: -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.value-card {
+  /* Each card follows the one before it — a 0.18 stagger against the same scroll progress. */
+  --p: clamp(0, calc(var(--reveal) * 2.4 - var(--i) * 0.18), 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3.5rem;
+  min-height: 15.5rem;
+  padding: 1.8rem;
+  border-radius: 22px;
+  background: rgba(2, 132, 154, 0.08);
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.75rem));
+  transition: opacity 0.3s linear, transform 0.3s linear;
+}
+
+.value-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  color: var(--teal);
+}
+
+.value-card h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.22rem;
+  letter-spacing: -0.015em;
+}
+
+.value-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.values-copy h2 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(2rem, 3.6vw, 3.1rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.values-copy .pill-label {
+  display: inline-block;
+  margin-bottom: 1.6rem;
+}
+
+/* ---------- stats ---------- */
+.stats {
+  background: var(--navy);
+  color: #fff;
+  padding: 3rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.stat + .stat {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  padding-left: 1.5rem;
+}
+
+.stat-value {
+  margin: 0 0 0.3rem;
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(120deg, #fff, #7fd4d8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat-label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+}
+
+/* ---------- services ---------- */
+.services {
+  --reveal: 0;
+  background: var(--bg-2);
+}
+
+/* One viewport tall plus however far the track overflows: the distance scrolled
+   through this wrapper is exactly the distance the track has to travel. --travel
+   and --pin are both written by the effect in Services(). */
+.services-pin {
+  height: calc(100vh + var(--travel, 0px));
+}
+
+.services-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  /* Top padding clears the fixed site header, which the pinned content sits under. */
+  padding-block: 7rem 2.5rem;
+  overflow: hidden;
+}
+
+.services-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.services-head h2 {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.services-head .pill-label {
+  display: inline-block;
+  margin-bottom: 1.4rem;
+}
+
+.carousel-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex: none;
+}
+
+.carousel-nav button {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--teal);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.carousel-nav button:hover:not(:disabled) {
+  background: var(--teal);
+  color: #fff;
+}
+
+.carousel-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.carousel-nav svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* While pinned the track is not scrollable at all — it is as wide as its cards and
+   dragged sideways by the page's own scroll position, with .services-sticky doing the
+   clipping. (Clipping on the track itself would move the clip along with it and hide
+   every card past the first screenful.) The overflow value is also what the effect
+   reads to tell the two modes apart. */
+.svc-track {
+  display: flex;
+  gap: 1.25rem;
+  padding-inline: max(1.5rem, calc((100% - 1280px) / 2));
+  padding-block: 0.5rem;
+  width: max-content;
+  overflow: visible;
+  transform: translate3d(calc(var(--pin, 0) * var(--travel, 0px) * -1), 0, 0);
+  will-change: transform;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.svc-track::-webkit-scrollbar {
+  display: none;
+}
+
+.svc-track:focus-visible {
+  outline: 3px solid rgba(2, 132, 154, 0.4);
+  outline-offset: 4px;
+}
+
+.svc-card {
+  /* Pinned, the cards need no entrance of their own — the pin moves them. The
+     fallback layout brings the staggered version back. */
+  --p: 1;
+  flex: 0 0 clamp(17.5rem, 25vw, 22rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.9rem;
+  border-radius: 26px;
+  background: #fff;
+  opacity: var(--p);
+  transform: translateX(calc((1 - var(--p)) * 3rem));
+  transition: opacity 0.35s linear, transform 0.35s linear;
+}
+
+.svc-badge {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-bottom: 1.6rem;
+  border-radius: 16px;
+  background: linear-gradient(140deg, rgba(20, 146, 161, 0.16), rgba(6, 47, 91, 0.1));
+  color: var(--teal);
+}
+
+.svc-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.svc-card h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.015em;
+}
+
+.svc-card p {
+  margin: 0 0 1.6rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.svc-card img {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1.8rem;
+  border-radius: 18px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.btn-outline-teal {
+  padding-inline: 0.5rem 1.3rem;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn-outline-teal .arrow-badge {
+  background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+  color: #fff;
+}
+
+.btn-outline-teal:hover {
+  border-color: rgba(2, 132, 154, 0.45);
+}
+
+/* A pinned section only gets one screen — trim it to fit shorter windows. */
+@media (min-width: 1101px) and (max-height: 860px) {
+  .services-sticky {
+    gap: 1.75rem;
+    padding-block: 6rem 1.5rem;
+  }
+
+  .services-head h2 {
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  }
+
+  .svc-card {
+    padding: 1.5rem;
+  }
+
+  .svc-card img {
+    padding-top: 1.2rem;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ---------- choose us ---------- */
+.choose {
+  --reveal: 0;
+  padding: 6rem 0;
+  background: #fff;
+}
+
+.choose-head {
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Pill, heading and lede lift in one after another as the section arrives. */
+.choose-head > * {
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.2rem));
+  transition: opacity 0.3s linear, transform 0.3s linear;
+}
+
+.choose-head .pill-label {
+  --p: clamp(0, calc(var(--reveal) * 6), 1);
+}
+
+.choose-head h2 {
+  --p: clamp(0, calc(var(--reveal) * 5 - 0.2), 1);
+}
+
+.choose-head .section-lede {
+  --p: clamp(0, calc(var(--reveal) * 4.5 - 0.45), 1);
+}
+
+.choose-head h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+/* The pill is a block-level <p>; centring the header would otherwise stretch it. */
+.choose-head .pill-label {
+  display: inline-block;
+}
+
+.choose-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.reasons {
+  /* Written by useScrollProgress from the list's own position; 1 is the resting state. */
+  --list: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reasons li {
+  /* Each line arrives just after the one above it. */
+  --p: clamp(0, calc(var(--list) * 2.2 - var(--i) * 0.16), 1);
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.25rem));
+  transition: opacity 0.3s linear, transform 0.3s linear, color 0.2s ease;
+}
+
+.reasons li:first-child {
+  padding-top: 0;
+}
+
+.reasons li:hover {
+  color: var(--teal);
+}
+
+.reason-num {
+  flex: none;
+  /* Fixed width and tabular figures, or the titles step in and out by a pixel or two. */
+  min-width: 2.4rem;
+  font-size: 0.95em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #9db0c0;
+}
+
+.choose-media {
+  /* Written by useScrollProgress from the photo's own position; 1 is the resting state. */
+  --p: 1;
+  position: relative;
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 36px 70px -40px rgba(6, 47, 91, 0.6);
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 2rem)) scale(calc(0.94 + var(--p) * 0.06));
+  transition: opacity 0.3s linear, transform 0.3s linear;
+}
+
+.choose-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.trust-card {
+  /* --card is written from the card's own position (it would otherwise inherit the
+     photo's --p and arrive with it, and the section's progress lands it off-screen). */
+  --card: 1;
+  --p: var(--card);
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.5rem));
+  transition: opacity 0.35s linear, transform 0.35s linear;
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  padding: 1.3rem 1.5rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  /* Navy-tinted rather than white glass: the photo behind it is light, and white-on-white
+     left the label and caption barely legible. */
+  background: rgba(6, 30, 56, 0.45);
+  backdrop-filter: blur(20px);
+  color: #fff;
+  text-align: left;
+}
+
+.trust-label {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.trust-value {
+  margin: 0.1rem 0 0.9rem;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.trust-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-weight: 600;
+}
+
+.trust-foot .avatars i {
+  /* Faces pop in one at a time once the card itself has landed. */
+  --p: clamp(0, calc(var(--card) * 1.8 - 0.55 - var(--i) * 0.09), 1);
+  width: 2.3rem;
+  height: 2.3rem;
+  font-size: 0.66rem;
+  opacity: var(--p);
+  transform: scale(calc(0.6 + var(--p) * 0.4));
+  transition: opacity 0.25s linear, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- cta ---------- */
+.cta {
+  padding: 4.5rem 0;
+  background: linear-gradient(120deg, var(--navy) 0%, var(--navy-soft) 55%, var(--teal) 130%);
+  color: #fff;
+}
+
+.cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.cta h2 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.cta p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* ---------- footer ---------- */
+.site-footer {
+  padding: 3rem 0 2.5rem;
+  background: #041a30;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-inner {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: #fff;
+}
+
+.footer-brand .brand-name {
+  margin: 0;
+}
+
+.footer-tag {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-nav a:hover {
+  color: #fff;
+}
+
+.footer-legal {
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .site-nav,
+  .header-cta {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+    justify-self: end;
+  }
+
+  .header-inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .site-header.is-open .mobile-panel {
+    display: flex;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-copy,
+  .hero-lede {
+    max-width: 100%;
+  }
+
+  .rating-card {
+    width: 100%;
+    max-width: 24rem;
+  }
+
+  .about {
+    padding: 5rem 0 5.5rem;
+  }
+
+  .values {
+    padding: 5rem 0;
+  }
+
+  .values-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+
+  /* Too narrow to pin: back to a plain horizontal scroller, with the cards
+     staggering in as the section passes instead. */
+  .services-pin {
+    height: auto;
+  }
+
+  .services-sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-block: 5rem 5.5rem;
+  }
+
+  .svc-track {
+    width: auto;
+    overflow-x: auto;
+    transform: none;
+  }
+
+  .svc-card {
+    --p: clamp(0, calc(var(--reveal) * 3.4 - var(--i) * 0.12), 1);
+  }
+
+  .choose {
+    padding: 5rem 0;
+  }
+
+  .choose-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .choose-media {
+    order: -1;
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  .choose-media img {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* Not enough room beside a wrapped heading — let the arrows take their own line. */
+  .services-head {
+    flex-wrap: wrap;
+  }
+
+  .carousel-nav {
+    margin-left: auto;
+  }
+
+  .values-grid {
+    order: 0;
+  }
+
+  .value-card {
+    min-height: 13.5rem;
+    gap: 2.5rem;
+  }
+
+  .about-photo {
+    position: static;
+    width: min(42%, 15rem);
+  }
+
+  .about-photo {
+    transform: translate(calc(var(--dir) * (1 - var(--p)) * 2rem), calc((1 - var(--p)) * 1.5rem))
+      rotate(calc(var(--rot) * (2 - var(--p)))) scale(calc(0.88 + var(--p) * 0.12));
+  }
+
+  .about-photo-left {
+    --rot: -5deg;
+  }
+
+  .about-photo-right {
+    --rot: 4deg;
+  }
+
+  .about-photos {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .shell,
+  .header-inner,
+  .hero-inner,
+  .mobile-panel {
+    width: min(1280px, 100% - 2rem);
+  }
+
+  .hero {
+    padding-top: 7.5rem;
+  }
+
+  /* Too narrow to hold both the copy and an off-centre subject — recentre the photo
+     and lean on a vertical scrim so the copy still sits on solid ground. */
+  .hero-media img {
+    width: 100%;
+    object-position: 58% 18%;
+  }
+
+  .hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 24, 46, 0.86) 0%,
+      rgba(4, 24, 46, 0.58) 30%,
+      rgba(4, 24, 46, 0.88) 78%,
+      rgba(4, 24, 46, 0.95) 100%
+    );
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reasons li {
+    gap: 0.6rem;
+  }
+
+  .reason-num {
+    min-width: 1.9rem;
+  }
+
+  .stat + .stat {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .rating-score {
+    font-size: 3.2rem;
+  }
+
+  .hero-actions .btn,
+  .cta-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .svc-card,
+  .caret,
+  .submenu {
+    transition: none;
+  }
+
+  .btn:hover,
+  .svc-card:hover {
+    transform: none;
+  }
+
+  .reveal-word {
+    opacity: 1;
+  }
+
+  /* No entrance animation and no scroll drift in the hero. */
+  .hero-media,
+  .eyebrow,
+  .hero h1 .line-in,
+  .chips li,
+  .hero-lede,
+  .hero-actions,
+  .rating-card {
+    animation: none;
+  }
+
+  .hero-media img,
+  .hero-copy {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* The photos are already left alone by the hook; these need pinning here. */
+  .value-card,
+  .svc-card,
+  .choose-head > * {
+    --p: 1;
+  }
+
+  /* No scroll-driven pinning either — the track goes back to being a scroller. */
+  .services-pin {
+    height: auto;
+  }
+
+  .services-sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-block: 5rem 5.5rem;
+  }
+
+  .svc-track {
+    width: auto;
+    overflow-x: auto;
+    transform: none;
+  }
+}
