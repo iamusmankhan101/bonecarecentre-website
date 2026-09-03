@@ -9,9 +9,9 @@ import logo from './assets/logo.png'
    the homepage keeps its in-page anchors instead of reloading itself; `href` is the
    cross-page form. Contact is the same either way because the footer is on every page. */
 export const NAV = [
-  { label: 'Home', hash: '#home', href: '/home' },
+  { label: 'Home', hash: '#home', href: '/' },
   { label: 'About', href: '/about' },
-  { label: 'Values', hash: '#values', href: '/home#values' },
+  { label: 'Values', hash: '#values', href: '/#values' },
   { label: 'Services', href: '/services' },
   { label: 'Why Us', href: '/why-us' },
   { label: 'Contact', hash: '#contact', href: '#contact' },
@@ -382,7 +382,7 @@ export function SiteHeader({ page = 'Home' }) {
   return (
     <header className={`site-header${stuck ? ' is-stuck' : ''}${open ? ' is-open' : ''}`}>
       <div className="header-inner">
-        <a className="site-brand" href={page === 'Home' ? '#home' : '/home'}>
+        <a className="site-brand" href={page === 'Home' ? '#home' : '/'}>
           {/* The logo artwork carries its own wordmark, so we crop to the emblem and set the name in type. */}
           <span className="brand-mark">
             <img src={logo} alt="" />
