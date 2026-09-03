@@ -816,16 +816,45 @@
   /* Pinned, the cards need no entrance of their own — the pin moves them. The
      fallback layout brings the staggered version back. */
   --p: 1;
+  position: relative;
   flex: 0 0 clamp(17.5rem, 25vw, 22rem);
+  min-height: 21rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 1.9rem;
+  border: 1px solid var(--line);
   border-radius: 26px;
   background: #fff;
+  overflow: hidden;
   opacity: var(--p);
   transform: translateX(calc((1 - var(--p)) * 3rem));
-  transition: opacity 0.35s linear, transform 0.35s linear;
+  transition: opacity 0.35s linear, transform 0.35s linear, border-color 0.35s ease;
+}
+
+.svc-card:hover {
+  border-color: rgba(2, 132, 154, 0.4);
+}
+
+/* With no photo to anchor the card, the service's own glyph is blown up and dropped
+   into the bottom corner as a watermark — enough shape to tell the cards apart at a
+   glance without competing with the copy. It is decorative, so it stays aria-hidden
+   (ServiceIcon already sets that) and paints under everything else. */
+.svc-watermark {
+  position: absolute;
+  right: -2.25rem;
+  bottom: -2.75rem;
+  z-index: 0;
+  width: 12rem;
+  height: 12rem;
+  color: var(--teal);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.svc-card > *:not(.svc-watermark) {
+  position: relative;
+  z-index: 1;
 }
 
 .svc-badge {
@@ -851,18 +880,13 @@
 }
 
 .svc-card p {
-  margin: 0 0 1.6rem;
+  margin: 0 0 1.9rem;
   color: var(--muted);
   line-height: 1.6;
 }
 
-.svc-card img {
-  width: 100%;
+.svc-card .btn {
   margin-top: auto;
-  padding-top: 1.8rem;
-  border-radius: 18px;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
 }
 
 .btn-outline-teal {
@@ -892,12 +916,12 @@
   }
 
   .svc-card {
+    min-height: 18rem;
     padding: 1.5rem;
   }
 
-  .svc-card img {
-    padding-top: 1.2rem;
-    aspect-ratio: 16 / 9;
+  .svc-badge {
+    margin-bottom: 1.1rem;
   }
 }
 
@@ -1008,11 +1032,17 @@
 .choose-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
+  /* A head-and-shoulders portrait: pull the frame up so the face sits in the top
+     two-thirds and the name plate lands on the jacket rather than the chin. */
+  object-position: center 22%;
 }
 
-.trust-card {
+/* The consultant's name plate, sat on the foot of the portrait. Navy-tinted glass
+   rather than white: the photo behind it is a pale studio backdrop, and white-on-white
+   left the smaller lines barely legible. */
+.doctor-card {
   /* --card is written from the card's own position (it would otherwise inherit the
      photo's --p and arrive with it, and the section's progress lands it off-screen). */
   --card: 1;
@@ -1024,47 +1054,72 @@
   left: 1.25rem;
   right: 1.25rem;
   bottom: 1.25rem;
-  padding: 1.3rem 1.5rem;
+  padding: 1.25rem 1.5rem 1.35rem;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  /* Navy-tinted rather than white glass: the photo behind it is light, and white-on-white
-     left the label and caption barely legible. */
-  background: rgba(6, 30, 56, 0.45);
+  background: rgba(6, 30, 56, 0.55);
   backdrop-filter: blur(20px);
   color: #fff;
   text-align: left;
 }
 
-.trust-label {
+.doctor-name {
   margin: 0;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.trust-value {
-  margin: 0.1rem 0 0.9rem;
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
-.trust-foot {
+.doctor-role {
+  margin: 0.35rem 0 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #7fd7e4;
+}
+
+/* The qualifications and the professorship are reference detail — small, and set on a
+   rule so they read as a footnote to the name rather than competing with it. */
+.doctor-quals {
+  margin: 0.7rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.doctor-post {
+  margin: 0.3rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* The patient count moves off the foot of the photo to make room for the name plate,
+   and rides along on the same progress value as the portrait. */
+.trust-pill {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
   display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(6, 30, 56, 0.55);
+  backdrop-filter: blur(20px);
+  color: #fff;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
-.trust-foot .avatars i {
-  /* Faces pop in one at a time once the card itself has landed. */
-  --p: clamp(0, calc(var(--card) * 1.8 - 0.55 - var(--i) * 0.09), 1);
-  width: 2.3rem;
-  height: 2.3rem;
-  font-size: 0.66rem;
-  opacity: var(--p);
-  transform: scale(calc(0.6 + var(--p) * 0.4));
-  transition: opacity 0.25s linear, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+.trust-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* ---------- cta ---------- */
@@ -1239,6 +1294,7 @@
 
   .choose-media img {
     aspect-ratio: 4 / 5;
+    object-position: center 20%;
   }
 
   /* Not enough room beside a wrapped heading — let the arrows take their own line. */

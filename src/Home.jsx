@@ -71,85 +71,63 @@ const STATS = [
 const SERVICES = [
   {
     title: 'Pediatric Limb Deformities',
-    copy: 'CTEV (clubfoot) and DDH corrected early, with staged casting, bracing and surgery when needed.',
+    copy: 'Clubfoot (CTEV) and hip dysplasia (DDH) caught early and corrected with serial casting, bracing and surgery where it is needed.',
     icon: 'pediatric',
-    photo: '/services/1.jpg',
-    alt: 'A surgical team at work in theatre',
   },
   {
     title: 'Children Fracture Management',
-    copy: 'Growing bones handled differently — gentle reduction, child-sized casts and growth-plate follow-up.',
+    copy: 'Growing bones heal differently. Gentle reduction, child-sized casts and follow-up that keeps an eye on the growth plate.',
     icon: 'childfracture',
-    photo: '/services/2.jpg',
-    alt: 'A consultant reading a set of scans',
   },
   {
     title: 'Fracture Management',
-    copy: 'Urgent assessment, reduction and fixation — from a wrist in a cast to a complex multi-part break.',
+    copy: 'Same-day assessment, reduction and fixation — from a straightforward wrist break to complex multi-fragment trauma.',
     icon: 'trauma',
-    photo: '/services/3.jpg',
-    alt: 'A consultant going through results at the bedside',
   },
   {
     title: 'Joint Replacement Surgery',
-    copy: 'Hip and knee replacement with rapid-recovery protocols and same-day mobilisation.',
+    copy: 'Hip and knee replacement by a consultant surgeon, with early mobilisation and a clear rehab plan from day one.',
     icon: 'joint',
-    photo: '/services/4.jpg',
-    alt: 'A rehab class working on exercise mats',
   },
   {
     title: 'Arthroscopic Keyhole Surgery',
-    copy: 'Knee and shoulder arthroscopy through small ports — less scarring, faster back to normal.',
+    copy: 'Knee and shoulder repaired through two small ports — less pain, a smaller scar and a quicker return to work.',
     icon: 'arthroscopy',
-    photo: '/services/5.jpg',
-    alt: 'A shoulder X-ray on the lightbox',
   },
   {
     title: 'Pain Management',
-    copy: 'A specialist pain clinic for chronic back, neck and joint pain, built around what you can actually do.',
+    copy: 'A dedicated clinic led by a Master in Pain Medicine, for back, neck and joint pain that has refused to settle.',
     icon: 'pain',
-    photo: '/services/6.jpg',
-    alt: 'A consultant going through results at the bedside',
   },
   {
     title: 'Joint Injuries',
-    copy: 'Ligament, meniscus and rotator cuff injuries — assessed, repaired and rehabilitated in one place.',
+    copy: 'Ligament, cartilage and rotator cuff injuries assessed, repaired and rehabilitated under one roof.',
     icon: 'sport',
-    photo: '/services/3.jpg',
-    alt: 'A group out running together',
   },
   {
     title: 'Intra-Articular Injections',
-    copy: 'PRP and gel injections placed directly into the joint to calm inflammation and delay surgery.',
+    copy: 'PRP and gel placed directly into the joint to calm inflammation, restore glide and put off surgery.',
     icon: 'injection',
-    photo: '/services/1.jpg',
-    alt: 'A surgical team at work in theatre',
   },
   {
     title: 'Nerve Blocks for Pain',
-    copy: 'Targeted blocks that interrupt the pain signal, so rehab can start while the cause is treated.',
+    copy: 'Targeted blocks that interrupt the pain signal, so you can move again while the cause is treated.',
     icon: 'nerve',
-    photo: '/services/2.jpg',
-    alt: 'A consultant reading a set of scans',
   },
   {
     title: 'Manipulation & POP Casting',
-    copy: 'Closed manipulation under anaesthesia and plaster casting, with checks until the bone is set.',
+    copy: 'Closed manipulation under anaesthesia and plaster casting, with X-ray checks until the bone has set.',
     icon: 'manipulation',
-    photo: '/services/4.jpg',
-    alt: 'A rehab class working on exercise mats',
   },
   {
     title: 'Osteoporosis & Arthritis',
-    copy: 'DEXA scanning, bone-density treatment and long-term arthritis plans for every age.',
+    copy: 'Bone-density testing, medication and long-term arthritis plans that keep you steady on your feet.',
     icon: 'bone',
-    photo: '/services/5.jpg',
-    alt: 'A shoulder X-ray on the lightbox',
   },
 ]
 
 /* Small stroked glyphs — one <path> set per service, kept inline so there is no icon dependency. */
-function ServiceIcon({ name }) {
+function ServiceIcon({ name, className = 'svc-icon' }) {
   const paths = {
     pediatric: 'M12 3.2a2 2 0 1 0 0 4 2 2 0 0 0 0-4M12 7.2v5.3M8.5 9.8h7M12 12.5l-2.6 3.4.8 4.9M12 12.5l2.6 3.4-.8 4.9',
     childfracture: 'M12 3.2a2 2 0 1 0 0 4 2 2 0 0 0 0-4M12 7.2v6.2M8 10.6l4 1.6 4-1.6M8 10.6l1.2 4.2h4.4M10.4 13.6L9.4 20.8M13.6 13.6l1 7.2',
@@ -164,7 +142,7 @@ function ServiceIcon({ name }) {
     bone: 'M6 18a2.5 2.5 0 1 1 2-4l6-6a2.5 2.5 0 1 1 4 2 2.5 2.5 0 1 1-2 4l-6 6a2.5 2.5 0 1 1-4-2',
   }
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="svc-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
       <path d={paths[name]} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
@@ -662,6 +640,7 @@ function Services() {
           <div className="svc-track" ref={trackRef} tabIndex={0} role="group" aria-label="Services, scrollable">
             {SERVICES.map((service, i) => (
               <article className="svc-card" key={service.title} style={{ '--i': i }}>
+                <ServiceIcon name={service.icon} className="svc-watermark" />
                 <span className="svc-badge">
                   <ServiceIcon name={service.icon} />
                 </span>
@@ -671,7 +650,6 @@ function Services() {
                   <ArrowBadge />
                   View details
                 </a>
-                <img src={service.photo} alt={service.alt} loading="lazy" />
               </article>
             ))}
           </div>
@@ -713,27 +691,21 @@ function ChooseUs() {
           </ol>
 
           <figure className="choose-media" ref={photoRef}>
-            <img src="/choose-us.jpg" alt="One of our consultants between appointments" loading="lazy" />
-            <figcaption className="trust-card" ref={cardRef}>
-              <p className="trust-label">Trusted by</p>
-              <p className="trust-value">25k+</p>
-              <div className="trust-foot">
-                <span className="avatars" aria-hidden="true">
-                  <i className="a1" style={{ '--i': 0 }}>
-                    RK
-                  </i>
-                  <i className="a2" style={{ '--i': 1 }}>
-                    SM
-                  </i>
-                  <i className="a3" style={{ '--i': 2 }}>
-                    AH
-                  </i>
-                  <i className="a-plus" style={{ '--i': 3 }}>
-                    +
-                  </i>
-                </span>
-                <span>Happy patients</span>
-              </div>
+            <img src="/dr-sohail.jpg" alt="Dr. Sohail Iqbal Sheikh" loading="lazy" />
+            <p className="trust-pill">
+              <span className="trust-value">25,000+</span>
+              <span>patients treated</span>
+            </p>
+            <figcaption className="doctor-card" ref={cardRef}>
+              <p className="doctor-name">Dr. Sohail Iqbal Sheikh</p>
+              <p className="doctor-role">Orthopaedic Surgeon &amp; Pain Specialist</p>
+              <p className="doctor-quals">
+                MBBS &middot; MS Orth &middot; D. Orth (Aust) &middot; PhD Sports Medicine &middot; Master in
+                Pain Medicine
+              </p>
+              <p className="doctor-post">
+                Professor &amp; Consultant, Islamic International Medical College
+              </p>
             </figcaption>
           </figure>
         </div>
