@@ -57,7 +57,13 @@ export const telHref = (phone) => `tel:+92${phone.replace(/\D/g, '').replace(/^0
 export const CONTACT = {
   address: ['Iqbal Medical Complex', 'F-10 Markaz, Islamabad'],
   phones: ['0333-5128377', '0333-5118234', '0345-4396533', '0333-5618753'],
+  whatsapp: '0331-5118333',
 }
+
+/* wa.me wants bare international digits, no plus and no separators. */
+export const waHref = (phone, text) =>
+  `https://wa.me/92${phone.replace(/\D/g, '').replace(/^0/, '')}` +
+  (text ? `?text=${encodeURIComponent(text)}` : '')
 
 /* Rendered on the homepage and again on /about. */
 export function ValueIcon({ name }) {
@@ -449,6 +455,29 @@ export function openBooking() {
   window.dispatchEvent(new Event(BOOKING_EVENT))
 }
 
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="wa-icon">
+      <path
+        d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.4-4.3A8.5 8.5 0 1 1 20.5 11.8Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <g transform="translate(6.35 5.9) scale(0.47)">
+        <path
+          d="M6.4 3.6h3.1l1.6 4-2 1.2a12 12 0 0 0 5.4 5.4l1.2-2 4 1.6v3.1a1.7 1.7 0 0 1-1.9 1.7A15.6 15.6 0 0 1 4.7 5.5a1.7 1.7 0 0 1 1.7-1.9Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3.2"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  )
+}
+
 export function BookingModal() {
   const [open, setOpen] = useState(false)
   const [sent, setSent] = useState(false)
@@ -512,9 +541,28 @@ export function BookingModal() {
     returnFocusRef.current?.focus?.()
   }
 
-  // No backend yet — swap this for a real POST when the endpoint exists.
+  /* There is no backend. The request is handed to WhatsApp instead: the form is turned
+     into a prefilled message to the clinic, which the patient then sends themselves.
+     window.open is called straight out of the submit so the browser counts it as
+     user-initiated; if a blocker stops it anyway, navigate in place instead. */
   const handleSubmit = (e) => {
     e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    const slug = data.get('service')
+    const service = SERVICES.find((item) => item.slug === slug)?.title ?? 'General consultation'
+    const notes = String(data.get('notes') ?? '').trim()
+
+    const lines = [
+      'New appointment request',
+      '',
+      `Name: ${String(data.get('name') ?? '').trim()}`,
+      `Phone: ${String(data.get('phone') ?? '').trim()}`,
+      `For: ${service}`,
+    ]
+    if (notes) lines.push(`Notes: ${notes}`)
+
+    const url = waHref(CONTACT.whatsapp, lines.join('\n'))
+    if (!window.open(url, '_blank', 'noopener,noreferrer')) window.location.href = url
     setSent(true)
   }
 
@@ -544,9 +592,9 @@ export function BookingModal() {
             </span>
             <h2 id="booking-title">Request received</h2>
             <p>
-              We will call you back to confirm a time. If it is urgent, ring the clinic on{' '}
-              <a href={telHref(CONTACT.phones[0])}>{CONTACT.phones[0]}</a>
-              .
+              WhatsApp should have opened with your details ready to go. Press send there and
+              the clinic will confirm a time. If nothing opened, ring{' '}
+              <a href={telHref(CONTACT.phones[0])}>{CONTACT.phones[0]}</a> instead.
             </p>
             <button type="button" className="btn btn-primary btn-lg" onClick={close}>
               <ArrowBadge />
@@ -558,8 +606,8 @@ export function BookingModal() {
             <p className="pill-label booking-pill">Book an appointment</p>
             <h2 id="booking-title">Tell us what is bothering you</h2>
             <p className="booking-lede">
-              Leave your details and the clinic will call you back to confirm a time. Same-week
-              appointments are usually available.
+              Fill this in and it becomes a WhatsApp message to the clinic, ready for you to
+              send. Same-week appointments are usually available.
             </p>
 
             <form className="booking-form" onSubmit={handleSubmit}>
@@ -592,20 +640,21 @@ export function BookingModal() {
                 <textarea name="notes" rows="3" placeholder="When it started, what makes it worse, any scans you already have." />
               </label>
 
-              <button type="submit" className="btn btn-primary btn-lg booking-submit">
-                <ArrowBadge />
-                Request an appointment
+              <button type="submit" className="btn btn-wa btn-lg booking-submit">
+                <WhatsAppIcon />
+                Send on WhatsApp
               </button>
             </form>
 
             <p className="booking-alt">
-              Or call the clinic directly:{' '}
+              Prefer to talk? Call the clinic on{' '}
               {CONTACT.phones.slice(0, 2).map((phone, i) => (
                 <span key={phone}>
-                  {i > 0 && ' / '}
+                  {i > 0 && ' or '}
                   <a href={telHref(phone)}>{phone}</a>
                 </span>
               ))}
+              .
             </p>
           </>
         )}
