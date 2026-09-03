@@ -295,10 +295,6 @@
 .hero-inner {
   width: min(1280px, 100% - 3rem);
   margin-inline: auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
 }
 
 .hero-copy {
@@ -383,84 +379,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-}
-
-.rating-card {
-  animation: hero-rise 0.9s cubic-bezier(0.22, 0.8, 0.3, 1) 0.95s both;
-  flex: none;
-  width: 20rem;
-  padding: 1.6rem 1.8rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--glass-line);
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.8);
-}
-
-.rating-score {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.25rem;
-  margin: 0 0 1.1rem;
-  font-size: 4.2rem;
-  line-height: 0.9;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-}
-
-.rating-score .star {
-  font-size: 1.4rem;
-  color: #ffd166;
-}
-
-.rating-foot {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.avatars {
-  display: flex;
-}
-
-.avatars i {
-  display: grid;
-  place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  margin-left: -0.7rem;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  font-size: 0.72rem;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #fff;
-}
-
-.avatars i:first-child {
-  margin-left: 0;
-}
-
-.avatars .a1 {
-  background: linear-gradient(140deg, #1492a1, #02849a);
-}
-.avatars .a2 {
-  background: linear-gradient(140deg, #0d4478, #062f5b);
-}
-.avatars .a3 {
-  background: linear-gradient(140deg, #6cc24a, #2f9e6d);
-}
-.avatars .a-plus {
-  background: #fff;
-  color: var(--teal);
-  font-size: 1.1rem;
-}
-
-.rating-label {
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.2;
 }
 
 /* ---------- about ---------- */
@@ -1276,19 +1194,9 @@
     display: flex;
   }
 
-  .hero-inner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .hero-copy,
   .hero-lede {
     max-width: 100%;
-  }
-
-  .rating-card {
-    width: 100%;
-    max-width: 24rem;
   }
 
   .about {
@@ -1439,10 +1347,6 @@
 
   .brand-name {
     font-size: 1.1rem;
-  }
-
-  .rating-score {
-    font-size: 3.2rem;
   }
 
   .hero-actions .btn,
@@ -1973,8 +1877,7 @@
   .hero h1 .line-in,
   .chips li,
   .hero-lede,
-  .hero-actions,
-  .rating-card {
+  .hero-actions {
     animation: none;
   }
 

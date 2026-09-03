@@ -148,28 +148,6 @@ function Hero() {
             </a>
           </div>
         </div>
-
-        <aside className="rating-card" aria-label="Patient rating">
-          <p className="rating-score">
-            4.9
-            <span className="star" aria-hidden="true">
-              ★
-            </span>
-          </p>
-          <div className="rating-foot">
-            <span className="avatars" aria-hidden="true">
-              <i className="a1">RK</i>
-              <i className="a2">SM</i>
-              <i className="a3">AH</i>
-              <i className="a-plus">+</i>
-            </span>
-            <span className="rating-label">
-              Happy
-              <br />
-              Patients
-            </span>
-          </div>
-        </aside>
       </div>
     </section>
   )
