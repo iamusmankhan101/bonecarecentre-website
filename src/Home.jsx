@@ -3,11 +3,14 @@ import {
   ArrowBadge,
   CallToAction,
   DOCTOR,
+  PHOTO_SWEEP,
   REASONS,
+  SECTION_SWEEP,
   SERVICES,
   ServiceIcon,
   SiteFooter,
   SiteHeader,
+  useScrollProgress,
   VALUES,
   ValueIcon,
 } from './site.jsx'
@@ -34,52 +37,6 @@ const STATS = [
   ['12', 'Specialist consultants'],
   ['98%', 'Would recommend us'],
 ]
-
-/* How far an element travels between starting and finishing its sweep. The text
-   sweep is paced off the whole section; a photo is much shorter than the section,
-   so it gets its own, tighter window — measured from the photo itself, or it would
-   finish while still below the fold. */
-const SECTION_SWEEP = (rect, vh) => rect.height * 0.75 + vh * 0.4
-const PHOTO_SWEEP = (rect, vh) => rect.height * 0.6 + vh * 0.3
-
-/* Writes an element's progress through the viewport (0 → 1) to a custom property.
-   `start` is the point, as a fraction of viewport height, where the element's top
-   begins the sweep. That property is all the scroll handler touches, so React never
-   re-renders and everything underneath works out its own opacity and transform in CSS.
-   Under prefers-reduced-motion nothing is written and the CSS resting state stands. */
-function useScrollProgress(property, start, sweep) {
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
-    let frame = 0
-
-    const update = () => {
-      frame = 0
-      const rect = el.getBoundingClientRect()
-      const vh = window.innerHeight || 1
-      const progress = (vh * start - rect.top) / sweep(rect, vh)
-      el.style.setProperty(property, Math.min(1, Math.max(0, progress)).toFixed(3))
-    }
-
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      if (frame) cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [property, start, sweep])
-
-  return ref
-}
 
 /* How far the page has scrolled away from the top, 0 → 1 over one viewport. The hero
    uses it to drift its photo and let the copy recede — measured from the window rather

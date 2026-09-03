@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logo from './assets/logo.png'
 
 /* Chrome and content shared by every page. Each page owns its own sections; the header,
@@ -267,6 +267,61 @@ export const SERVICES = [
     ],
   },
 ]
+
+/* How far an element travels between starting and finishing its sweep. The text
+   sweep is paced off the whole section; a photo is much shorter than the section,
+   so it gets its own, tighter window — measured from the photo itself, or it would
+   finish while still below the fold. */
+export const SECTION_SWEEP = (rect, vh) => rect.height * 0.75 + vh * 0.4
+export const PHOTO_SWEEP = (rect, vh) => rect.height * 0.6 + vh * 0.3
+
+/* Writes an element's progress through the viewport (0 → 1) to a custom property.
+   `start` is the point, as a fraction of viewport height, where the element's top
+   begins the sweep. That property is all the scroll handler touches, so React never
+   re-renders and everything underneath works out its own opacity and transform in CSS.
+   Under prefers-reduced-motion nothing is written and the CSS resting state stands. */
+export function useScrollProgress(property, start, sweep) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      const rect = el.getBoundingClientRect()
+      const vh = window.innerHeight || 1
+      const progress = (vh * start - rect.top) / sweep(rect, vh)
+      el.style.setProperty(property, Math.min(1, Math.max(0, progress)).toFixed(3))
+    }
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [property, start, sweep])
+
+  return ref
+}
+
+/* Wraps one element in its own scroll progress, so a long page can have every entry time
+   its own arrival instead of sharing one value that finishes before the last one is seen.
+   Add `rise` to className for the default fade-and-lift, or write `--reveal` and let the
+   children stagger themselves off it. */
+export function Reveal({ as: Tag = 'div', prop = '--p', start = 0.9, sweep = PHOTO_SWEEP, ...rest }) {
+  const ref = useScrollProgress(prop, start, sweep)
+  return <Tag ref={ref} {...rest} />
+}
 
 /* Small stroked glyphs, one <path> set per service, kept inline so there is no icon dependency. */
 export function ServiceIcon({ name, className = 'svc-icon' }) {

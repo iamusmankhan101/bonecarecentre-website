@@ -1393,6 +1393,58 @@
   }
 }
 
+/* ---------- sub-page motion ----------
+   The page head plays once on load, the way the hero does. Everything below it is
+   scroll-driven: `rise` elements get their own --p from a <Reveal>, and `stagger`
+   containers get one --reveal that their children fan out from. Both rest at 1, so a
+   page with no JS (or with reduced motion asked for) renders fully visible. */
+.page-head .pill-label {
+  animation: hero-rise 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) 0.05s both;
+}
+
+.page-head h1 {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) 0.15s both;
+}
+
+.page-head .section-lede {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) 0.28s both;
+}
+
+.chip-nav a {
+  /* The chips arrive one after another once the heading above them has landed. */
+  animation: hero-rise 0.6s cubic-bezier(0.22, 0.8, 0.3, 1) calc(0.4s + var(--i, 0) * 0.035s) both;
+}
+
+.rise {
+  --p: 1;
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.75rem));
+  transition: opacity 0.4s linear, transform 0.4s linear;
+}
+
+.stagger {
+  --reveal: 1;
+}
+
+.stagger > * {
+  --p: clamp(0, calc(var(--reveal) * 2.4 - var(--i, 0) * 0.18), 1);
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.75rem));
+  transition: opacity 0.35s linear, transform 0.35s linear;
+}
+
+/* The long numbered lists come in from the side the rail sits on, so the number leads.
+   The slide goes on the two children rather than the row, because the row holds a
+   position: sticky rail and a transform on it would make the row its containing block. */
+.detail.rise {
+  transform: none;
+}
+
+.detail.rise > * {
+  transform: translate(calc((1 - var(--p)) * 1.5rem), calc((1 - var(--p)) * 1.25rem));
+  transition: transform 0.4s linear;
+}
+
 /* ---------- sub-pages (/services, /why-us) ----------
    The homepage is one long scroll; the sub-pages share a dark page header, an index of
    chips, and a numbered long-form list. All three live here so the pages stay identical. */
@@ -1584,6 +1636,23 @@
 @media (prefers-reduced-motion: reduce) {
   .subpage {
     scroll-behavior: auto;
+  }
+
+  /* Nothing on a sub-page moves: the load animations are cancelled and every scroll
+     value is pinned to its resting state. */
+  .page-head .pill-label,
+  .page-head h1,
+  .page-head .section-lede,
+  .chip-nav a {
+    animation: none;
+  }
+
+  .rise,
+  .rise > *,
+  .stagger > * {
+    --p: 1;
+    transform: none;
+    transition: none;
   }
 
   .btn,

@@ -4,6 +4,7 @@ import {
   CLINIC,
   CONTACT,
   DOCTOR,
+  Reveal,
   SiteFooter,
   SiteHeader,
   VALUES,
@@ -33,8 +34,8 @@ export default function About() {
         </section>
 
         <section className="story">
-          <div className="shell story-inner">
-            <div className="story-copy">
+          <Reveal className="shell story-inner stagger" prop="--reveal">
+            <div className="story-copy" style={{ '--i': 0 }}>
               <h2>Movement is the measure of a good life</h2>
               <p>
                 Most people arrive here having already been somewhere else. A knee that was
@@ -61,14 +62,14 @@ export default function About() {
               </a>
             </div>
 
-            <figure className="story-photo">
+            <figure className="story-photo" style={{ '--i': 1 }}>
               <img src={DOCTOR.photo} alt={DOCTOR.name} loading="lazy" />
               <figcaption>
                 <span className="story-photo-name">{DOCTOR.name}</span>
                 <span className="story-photo-role">{DOCTOR.role}</span>
               </figcaption>
             </figure>
-          </div>
+          </Reveal>
         </section>
 
         <section className="about-values">
@@ -76,15 +77,15 @@ export default function About() {
             <p className="pill-label">Core Values</p>
             <h2>What that looks like in practice</h2>
 
-            <div className="about-values-grid">
-              {VALUES.map((value) => (
-                <article className="value-card" key={value.title}>
+            <Reveal className="about-values-grid" prop="--reveal">
+              {VALUES.map((value, i) => (
+                <article className="value-card" key={value.title} style={{ '--i': i }}>
                   <ValueIcon name={value.icon} />
                   <h3>{value.title}</h3>
                   <p>{value.copy}</p>
                 </article>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
 
@@ -93,21 +94,25 @@ export default function About() {
           <div className="shell">
             <p className="pill-label">The Clinic</p>
             <h2>What you walk into</h2>
+            <p className="section-lede clinic-lede">
+              The entrance on F-10 Markaz, the waiting area, and the rooms you are actually seen
+              in. Photographed as they are, on an ordinary day.
+            </p>
 
-            <div className="clinic-grid">
-              {CLINIC.map((shot) => (
-                <figure key={shot.src}>
+            <Reveal className="clinic-grid stagger" prop="--reveal">
+              {CLINIC.map((shot, i) => (
+                <figure key={shot.src} style={{ '--i': i }}>
                   <img src={shot.src} alt={shot.alt} loading="lazy" />
                   <figcaption>{shot.caption}</figcaption>
                 </figure>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <section className="find-us">
-          <div className="shell find-us-inner">
-            <div>
+          <Reveal className="shell find-us-inner stagger" prop="--reveal">
+            <div style={{ '--i': 0 }}>
               <p className="pill-label">Find Us</p>
               <h2>Iqbal Medical Complex</h2>
               <address>
@@ -117,7 +122,7 @@ export default function About() {
               </address>
             </div>
 
-            <div className="phone-list">
+            <div className="phone-list" style={{ '--i': 1 }}>
               <p className="phone-label">Call the clinic</p>
               <ul>
                 {CONTACT.phones.map((phone) => (
@@ -127,7 +132,7 @@ export default function About() {
                 ))}
               </ul>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <CallToAction />

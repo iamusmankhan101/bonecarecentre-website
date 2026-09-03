@@ -1,4 +1,12 @@
-import { ArrowBadge, CallToAction, SERVICES, ServiceIcon, SiteFooter, SiteHeader } from './site.jsx'
+import {
+  ArrowBadge,
+  CallToAction,
+  Reveal,
+  SERVICES,
+  ServiceIcon,
+  SiteFooter,
+  SiteHeader,
+} from './site.jsx'
 import './home.css'
 
 /* The eleven services from the clinic's own list, each with the fuller write-up the
@@ -23,8 +31,8 @@ export default function Services() {
             {/* A dedicated page for eleven services is long, so the index is a way in
                 rather than a decoration. */}
             <nav className="chip-nav" aria-label="Services on this page">
-              {SERVICES.map((service) => (
-                <a key={service.slug} href={`#${service.slug}`}>
+              {SERVICES.map((service, i) => (
+                <a key={service.slug} href={`#${service.slug}`} style={{ '--i': i }}>
                   <ServiceIcon name={service.icon} className="chip-nav-icon" />
                   {service.title}
                 </a>
@@ -37,7 +45,7 @@ export default function Services() {
           <div className="shell">
             <ol>
               {SERVICES.map((service, i) => (
-                <li className="detail" id={service.slug} key={service.slug}>
+                <Reveal as="li" className="detail rise" id={service.slug} key={service.slug}>
                   <div className="detail-head">
                     <span className="svc-badge">
                       <ServiceIcon name={service.icon} />
@@ -58,7 +66,7 @@ export default function Services() {
                       Book this treatment
                     </a>
                   </div>
-                </li>
+                </Reveal>
               ))}
             </ol>
           </div>

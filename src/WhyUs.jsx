@@ -1,4 +1,12 @@
-import { ArrowBadge, CallToAction, DOCTOR, REASONS, SiteFooter, SiteHeader } from './site.jsx'
+import {
+  ArrowBadge,
+  CallToAction,
+  DOCTOR,
+  REASONS,
+  Reveal,
+  SiteFooter,
+  SiteHeader,
+} from './site.jsx'
 import './home.css'
 import './why-us.css'
 
@@ -23,12 +31,12 @@ export default function WhyUs() {
 
         {/* The credentials belong next to the face they belong to. */}
         <section className="consultant">
-          <div className="shell consultant-inner">
-            <figure className="consultant-photo">
+          <Reveal className="shell consultant-inner stagger" prop="--reveal">
+            <figure className="consultant-photo" style={{ '--i': 0 }}>
               <img src={DOCTOR.photo} alt={DOCTOR.name} />
             </figure>
 
-            <div className="consultant-body">
+            <div className="consultant-body" style={{ '--i': 1 }}>
               <p className="pill-label">Your consultant</p>
               <h2>{DOCTOR.name}</h2>
               <p className="consultant-role">{DOCTOR.role}</p>
@@ -49,14 +57,14 @@ export default function WhyUs() {
                 Book an appointment
               </a>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <section className="detail-list">
           <div className="shell">
             <ol>
               {REASONS.map((reason, i) => (
-                <li className="detail" id={reason.slug} key={reason.slug}>
+                <Reveal as="li" className="detail rise" id={reason.slug} key={reason.slug}>
                   <div className="detail-head">
                     <span className="detail-num detail-num-lg">{String(i + 1).padStart(2, '0')}</span>
                   </div>
@@ -65,7 +73,7 @@ export default function WhyUs() {
                     <h2>{reason.title}</h2>
                     <p className="detail-copy">{reason.more}</p>
                   </div>
-                </li>
+                </Reveal>
               ))}
             </ol>
           </div>

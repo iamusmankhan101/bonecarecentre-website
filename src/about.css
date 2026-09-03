@@ -92,10 +92,26 @@
   margin-bottom: 1.2rem;
 }
 
+/* .value-card works out its own --p from this, exactly as it does on the homepage;
+   1 is the resting state for no-JS and reduced motion. */
 .about-values-grid {
+  --reveal: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1.25rem;
+}
+
+/* This heading is followed by a lede, so the gap belongs after the lede instead. */
+.clinic h2 {
+  margin-bottom: 1rem;
+}
+
+.clinic-lede {
+  max-width: 56ch;
+  margin: 0 0 2.2rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--muted);
 }
 
 /* ---------- clinic gallery ---------- */
@@ -104,31 +120,59 @@
   background: var(--bg-2);
 }
 
+/* Fixed three columns rather than auto-fit: there are exactly six shots, so this is two
+   full rows. auto-fit packed five across the 1280px shell and orphaned the sixth. */
 .clinic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
 .clinic-grid figure {
+  position: relative;
   margin: 0;
   border-radius: 22px;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--line);
+  background: var(--navy);
+  box-shadow: 0 26px 50px -34px rgba(6, 47, 91, 0.65);
 }
 
 .clinic-grid img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
+.clinic-grid figure:hover img {
+  transform: scale(1.05);
+}
+
+/* The label sits on the photo under a gradient rather than on a white bar below it, so
+   the grid reads as six photographs instead of six cards. */
 .clinic-grid figcaption {
-  padding: 0.85rem 1.1rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 600;
+  position: absolute;
+  inset: auto 0 0;
+  padding: 2.75rem 1.1rem 1rem;
+  background: linear-gradient(180deg, rgba(4, 24, 46, 0) 0%, rgba(4, 24, 46, 0.82) 62%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .clinic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .clinic-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ---------- find us ---------- */
@@ -196,7 +240,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .phone-list a {
+  .phone-list a,
+  .clinic-grid img {
     transition: none;
+  }
+
+  .clinic-grid figure:hover img {
+    transform: none;
   }
 }
