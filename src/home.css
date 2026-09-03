@@ -315,14 +315,15 @@
   animation: hero-fade 1.2s ease both;
 }
 
-/* The photo is wider than the viewport and anchored left, which pushes the
-   subject into the right half and keeps the headline clear of their face.
-   It also drifts and creeps closer as the page scrolls away from the hero. */
+/* A tall portrait shot of the consulting room in a wide box: cover crops it hard
+   vertically, so the framing is pulled down past the ceiling tiles to hold the
+   sofa, the desk and the chair in one band. It also drifts and creeps closer as
+   the page scrolls away from the hero. */
 .hero-media img {
-  width: 132%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: left 24%;
+  object-position: center 62%;
   transform: translateY(calc(var(--scrolled) * 4rem)) scale(calc(1 + var(--scrolled) * 0.06));
   will-change: transform;
 }
@@ -1293,11 +1294,11 @@
     padding-top: 7.5rem;
   }
 
-  /* Too narrow to hold both the copy and an off-centre subject — recentre the photo
-     and lean on a vertical scrim so the copy still sits on solid ground. */
+  /* Narrow enough to nearly match the photo's own portrait ratio, so it needs far
+     less vertical crop — and a vertical scrim keeps the copy on solid ground. */
   .hero-media img {
     width: 100%;
-    object-position: 58% 18%;
+    object-position: center 55%;
   }
 
   .hero-scrim {

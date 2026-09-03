@@ -4,7 +4,7 @@ import './home.css'
 
 /* Swap this for your own clinic photography — anything wide and bright, with the
    subject sitting right of centre so the headline keeps the left half to itself. */
-const HERO_IMAGE = '/hero.jpg'
+const HERO_IMAGE = '/hero-room.jpg'
 
 const NAV = [
   { label: 'Home', href: '#home' },
@@ -70,58 +70,98 @@ const STATS = [
 
 const SERVICES = [
   {
-    title: 'Joint Replacement',
-    copy: 'Hip and knee replacement with rapid-recovery protocols and same-day mobilisation.',
-    icon: 'joint',
+    title: 'Pediatric Limb Deformities',
+    copy: 'CTEV (clubfoot) and DDH corrected early, with staged casting, bracing and surgery when needed.',
+    icon: 'pediatric',
     photo: '/services/1.jpg',
     alt: 'A surgical team at work in theatre',
   },
   {
-    title: 'Spine Care',
-    copy: 'From slipped discs to scoliosis — conservative first, surgery only when it is the right call.',
-    icon: 'spine',
+    title: 'Children Fracture Management',
+    copy: 'Growing bones handled differently — gentle reduction, child-sized casts and growth-plate follow-up.',
+    icon: 'childfracture',
     photo: '/services/2.jpg',
     alt: 'A consultant reading a set of scans',
   },
   {
-    title: 'Sports Injury',
-    copy: 'ACL, meniscus and rotator cuff repair, plus return-to-play programmes built around your season.',
+    title: 'Fracture Management',
+    copy: 'Urgent assessment, reduction and fixation — from a wrist in a cast to a complex multi-part break.',
+    icon: 'trauma',
+    photo: '/services/3.jpg',
+    alt: 'A consultant going through results at the bedside',
+  },
+  {
+    title: 'Joint Replacement Surgery',
+    copy: 'Hip and knee replacement with rapid-recovery protocols and same-day mobilisation.',
+    icon: 'joint',
+    photo: '/services/4.jpg',
+    alt: 'A rehab class working on exercise mats',
+  },
+  {
+    title: 'Arthroscopic Keyhole Surgery',
+    copy: 'Knee and shoulder arthroscopy through small ports — less scarring, faster back to normal.',
+    icon: 'arthroscopy',
+    photo: '/services/5.jpg',
+    alt: 'A shoulder X-ray on the lightbox',
+  },
+  {
+    title: 'Pain Management',
+    copy: 'A specialist pain clinic for chronic back, neck and joint pain, built around what you can actually do.',
+    icon: 'pain',
+    photo: '/services/6.jpg',
+    alt: 'A consultant going through results at the bedside',
+  },
+  {
+    title: 'Joint Injuries',
+    copy: 'Ligament, meniscus and rotator cuff injuries — assessed, repaired and rehabilitated in one place.',
     icon: 'sport',
     photo: '/services/3.jpg',
     alt: 'A group out running together',
   },
   {
-    title: 'Physiotherapy',
-    copy: 'One-to-one rehab in our on-site gym, with hydrotherapy and manual therapy suites.',
-    icon: 'physio',
+    title: 'Intra-Articular Injections',
+    copy: 'PRP and gel injections placed directly into the joint to calm inflammation and delay surgery.',
+    icon: 'injection',
+    photo: '/services/1.jpg',
+    alt: 'A surgical team at work in theatre',
+  },
+  {
+    title: 'Nerve Blocks for Pain',
+    copy: 'Targeted blocks that interrupt the pain signal, so rehab can start while the cause is treated.',
+    icon: 'nerve',
+    photo: '/services/2.jpg',
+    alt: 'A consultant reading a set of scans',
+  },
+  {
+    title: 'Manipulation & POP Casting',
+    copy: 'Closed manipulation under anaesthesia and plaster casting, with checks until the bone is set.',
+    icon: 'manipulation',
     photo: '/services/4.jpg',
     alt: 'A rehab class working on exercise mats',
   },
   {
-    title: 'Bone Health',
-    copy: 'DEXA scanning, osteoporosis screening and fracture-prevention plans for every age.',
+    title: 'Osteoporosis & Arthritis',
+    copy: 'DEXA scanning, bone-density treatment and long-term arthritis plans for every age.',
     icon: 'bone',
     photo: '/services/5.jpg',
     alt: 'A shoulder X-ray on the lightbox',
-  },
-  {
-    title: 'Fracture & Trauma',
-    copy: 'Urgent assessment, fixation and follow-up — from a wrist in a cast to a complex break.',
-    icon: 'trauma',
-    photo: '/services/6.jpg',
-    alt: 'A consultant going through results at the bedside',
   },
 ]
 
 /* Small stroked glyphs — one <path> set per service, kept inline so there is no icon dependency. */
 function ServiceIcon({ name }) {
   const paths = {
+    pediatric: 'M12 3.2a2 2 0 1 0 0 4 2 2 0 0 0 0-4M12 7.2v5.3M8.5 9.8h7M12 12.5l-2.6 3.4.8 4.9M12 12.5l2.6 3.4-.8 4.9',
+    childfracture: 'M12 3.2a2 2 0 1 0 0 4 2 2 0 0 0 0-4M12 7.2v6.2M8 10.6l4 1.6 4-1.6M8 10.6l1.2 4.2h4.4M10.4 13.6L9.4 20.8M13.6 13.6l1 7.2',
+    trauma: 'M6 18a2.5 2.5 0 1 1 2-4l6-6a2.5 2.5 0 1 1 4 2 2.5 2.5 0 1 1-2 4l-6 6a2.5 2.5 0 1 1-4-2M9.6 9.6l4.8 4.8',
     joint: 'M8 3v5a4 4 0 0 0 8 0M8 21v-5a4 4 0 0 1 8 0M6 12h12',
-    spine: 'M12 3v18M8 6h8M7 10h10M8 14h8M9 18h6',
+    arthroscopy: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18M12 8.4a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4M10.7 12.4 10 17h4l-.7-4.6',
+    pain: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M13.2 7 9.8 12.2h4L10.6 17',
     sport: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M4 8c4 1 12 1 16 0M4 16c4-1 12-1 16 0',
-    physio: 'M4 20c3-6 6-9 8-9s5 3 8 9M12 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4',
+    injection: 'M15.6 2.6 21.4 8.4M20 5.2l-3 3M18 7.2 6.6 18.6l-4 1.4 1.4-4L15.4 4.6M11.2 10.4l3 3',
+    nerve: 'M3 12h3l2.4-5 3.2 10 2.4-5H21M6.5 4.5l11 15',
+    manipulation: 'M9 21v-5l-2.8-2.8a1.6 1.6 0 0 1 2.2-2.2L10 12.3V4.4a1.4 1.4 0 0 1 2.8 0v5M12.8 9.6V8.2a1.4 1.4 0 0 1 2.8 0v1.8M15.6 10.6V9.4a1.4 1.4 0 0 1 2.8 0V15a6 6 0 0 1-2 4.5V21',
     bone: 'M6 18a2.5 2.5 0 1 1 2-4l6-6a2.5 2.5 0 1 1 4 2 2.5 2.5 0 1 1-2 4l-6 6a2.5 2.5 0 1 1-4-2',
-    trauma: 'M12 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6M8 21v-5l-2-3 3-2h6l3 2-2 3v5',
   }
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="svc-icon">
