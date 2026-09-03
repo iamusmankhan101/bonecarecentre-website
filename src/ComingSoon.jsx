@@ -58,7 +58,7 @@ function NotifyForm() {
   if (sent) {
     return (
       <p className="notice" role="status">
-        Thank you — we&rsquo;ll let you know the moment we go live.
+        Thank you. We&rsquo;ll let you know the moment we go live.
       </p>
     )
   }
@@ -90,7 +90,7 @@ export default function ComingSoon() {
         <img
           className="logo"
           src={logo}
-          alt="Bone Care Centre — strong bones, healthy joints, better life"
+          alt="Bone Care Centre: strong bones, healthy joints, better life"
           width="500"
           height="500"
         />
@@ -104,7 +104,7 @@ export default function ComingSoon() {
           <em>orthopaedic care</em> is coming soon.
         </h1>
         <p className="lede">
-          Specialist bone, joint and spine care — from diagnosis to rehabilitation. We&rsquo;re
+          Specialist bone, joint and spine care, from diagnosis to rehabilitation. We&rsquo;re
           building a better place to book, learn and recover.
         </p>
 

@@ -184,52 +184,6 @@
   background: rgba(255, 255, 255, 0.14);
 }
 
-.caret {
-  width: 0.95rem;
-  height: 0.95rem;
-  transition: transform 0.2s ease;
-}
-
-.has-menu {
-  position: relative;
-}
-
-.has-menu:hover .caret,
-.has-menu:focus-within .caret {
-  transform: rotate(180deg);
-}
-
-.submenu {
-  position: absolute;
-  top: calc(100% + 0.6rem);
-  left: 50%;
-  transform: translate(-50%, 8px);
-  display: block;
-  min-width: 12rem;
-  padding: 0.5rem;
-  border-radius: 18px;
-  background: rgba(6, 30, 56, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 26px 50px -28px rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-}
-
-.has-menu:hover .submenu,
-.has-menu:focus-within .submenu {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-}
-
-.submenu a {
-  display: block;
-  border-radius: 12px;
-  padding: 0.55rem 0.8rem;
-}
-
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -570,7 +524,7 @@
   position: absolute;
   top: 50%;
   z-index: 1;
-  width: clamp(11rem, 17vw, 15.5rem);
+  width: clamp(9.5rem, 14vw, 13.5rem);
   margin: 0;
   border-radius: 22px;
   overflow: hidden;
@@ -584,10 +538,12 @@
   will-change: transform, opacity;
 }
 
+/* Portrait, to match the shots themselves — a 4/3 frame cropped the ceiling and the
+   floor off both rooms and left only a strip of wall. */
 .about-photo img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
 }
 
@@ -973,12 +929,26 @@
   gap: clamp(2.5rem, 5vw, 4.5rem);
 }
 
-.reasons {
-  /* Written by useScrollProgress from the list's own position; 1 is the resting state. */
+/* --list is written by useScrollProgress from this wrapper's position, so both the list
+   and the button below it can time themselves off the same value; 1 is the resting state. */
+.choose-reasons {
   --list: 1;
+}
+
+.reasons {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* The list and its button are one grid cell; the button rides in on the last row's
+   progress so it does not arrive before the reason above it. */
+.choose-cta {
+  --p: clamp(0, calc(var(--list) * 2.2 - 0.8), 1);
+  margin-top: 2rem;
+  opacity: var(--p);
+  transform: translateY(calc((1 - var(--p)) * 1.25rem));
+  transition: opacity 0.3s linear, transform 0.3s linear;
 }
 
 .reasons li {
@@ -1337,7 +1307,7 @@
 
   .about-photo {
     position: static;
-    width: min(42%, 15rem);
+    width: min(42%, 13rem);
   }
 
   .about-photo {
@@ -1423,11 +1393,202 @@
   }
 }
 
+/* ---------- sub-pages (/services, /why-us) ----------
+   The homepage is one long scroll; the sub-pages share a dark page header, an index of
+   chips, and a numbered long-form list. All three live here so the pages stay identical. */
+
+/* The header is fixed, so anchored jumps would otherwise land under it. */
+.subpage {
+  scroll-behavior: smooth;
+}
+
+.subpage :target,
+.detail {
+  scroll-margin-top: 7rem;
+}
+
+/* ---------- page head ---------- */
+.page-head {
+  padding: 10rem 0 4rem;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-soft) 62%, var(--bg-2) 100%);
+  color: #fff;
+}
+
+.page-head .pill-label {
+  display: inline-block;
+  margin-bottom: 1.6rem;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+  color: #fff;
+}
+
+.page-head h1 {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 3.9rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.page-head .section-lede {
+  max-width: 58ch;
+  margin: 1.4rem 0 0;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- index ---------- */
+.chip-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2.6rem;
+}
+
+.chip-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.chip-nav a:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.chip-nav-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  opacity: 0.85;
+}
+
+/* ---------- the treatments ---------- */
+.detail-list {
+  padding: 1rem 0 5rem;
+  background: var(--bg-2);
+}
+
+.detail-list ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 2.5rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail:last-child {
+  border-bottom: 0;
+}
+
+/* The badge and the number ride together in the left rail, and stay in view on tall
+   entries so you can always see which of the eleven you are reading. */
+.detail-head {
+  position: sticky;
+  top: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  align-self: start;
+}
+
+.detail-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #9db0c0;
+}
+
+.detail-body h2 {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.detail-copy {
+  max-width: 62ch;
+  margin: 0.9rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.detail-points {
+  margin: 1.5rem 0 1.8rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* A teal tick drawn in CSS rather than an SVG per bullet. */
+.detail-points li {
+  position: relative;
+  padding-left: 1.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.detail-points li::before {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  top: 0.32em;
+  width: 0.42rem;
+  height: 0.78rem;
+  border: solid var(--teal);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 860px) {
+  .page-head {
+    padding: 8.5rem 0 3rem;
+  }
+
+  /* Not enough width for a rail: the badge sits above the heading and the number goes,
+     since the index above already gives the ordering. */
+  .detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+    padding: 2.5rem 0;
+  }
+
+  .detail-head {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.9rem;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
+  .subpage {
+    scroll-behavior: auto;
+  }
+
   .btn,
   .svc-card,
-  .caret,
-  .submenu {
+  .chip-nav a {
     transition: none;
   }
 
