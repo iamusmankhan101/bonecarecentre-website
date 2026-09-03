@@ -40,15 +40,18 @@ export const VALUES = [
   },
 ]
 
-/* The clinic's own rooms, shown on /about. Nothing staged: this is what you walk into. */
+/* The clinic's own rooms, shown on /about. Nothing staged: this is what you walk into.
+   The first entry is the feature tile in the mosaic, so it wants the widest view. */
 export const CLINIC = [
-  { src: '/clinic/entrance.jpg', alt: 'The entrance to Iqbal Medical Complex on F-10 Markaz', caption: 'The entrance' },
   { src: '/clinic/reception.jpg', alt: 'The reception desk inside the building', caption: 'Reception' },
   { src: '/clinic/waiting.jpg', alt: 'Seating in the waiting area', caption: 'Waiting area' },
   { src: '/clinic/corridor.jpg', alt: 'The corridor running between the consulting rooms', caption: 'The corridor' },
   { src: '/clinic/consulting-room.jpg', alt: 'A consulting room with the examination couch alongside the desk', caption: 'Consulting room' },
   { src: '/clinic/treatment-room.jpg', alt: 'A treatment room with the examination couch and stools', caption: 'Treatment room' },
 ]
+
+/* Local numbers are written 03xx-xxxxxxx; a tel: link needs them in international form. */
+export const telHref = (phone) => `tel:+92${phone.replace(/\D/g, '').replace(/^0/, '')}`
 
 /* Straight off the clinic banner. */
 export const CONTACT = {
@@ -397,10 +400,10 @@ export function SiteHeader({ page = 'Home' }) {
           </ul>
         </nav>
 
-        <a className="btn btn-primary header-cta" href="#book">
+        <button type="button" className="btn btn-primary header-cta" onClick={openBooking}>
           <ArrowBadge />
           Book Now
-        </a>
+        </button>
 
         <button
           type="button"
@@ -421,12 +424,193 @@ export function SiteHeader({ page = 'Home' }) {
             {item.label}
           </a>
         ))}
-        <a className="btn btn-primary" href="#book" onClick={() => setOpen(false)}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            setOpen(false)
+            openBooking()
+          }}
+        >
           <ArrowBadge />
           Book Now
-        </a>
+        </button>
       </div>
     </header>
+  )
+}
+
+/* Booking is a dialog rather than a link to the foot of the page, so it works the same
+   from any page and never loses the reader's place. Every "Book" control on the site
+   calls openBooking(); <BookingModal /> is mounted once per page and listens. */
+const BOOKING_EVENT = 'booking:open'
+
+export function openBooking() {
+  window.dispatchEvent(new Event(BOOKING_EVENT))
+}
+
+export function BookingModal() {
+  const [open, setOpen] = useState(false)
+  const [sent, setSent] = useState(false)
+  const dialogRef = useRef(null)
+  const firstFieldRef = useRef(null)
+  const returnFocusRef = useRef(null)
+
+  useEffect(() => {
+    const onOpen = () => {
+      returnFocusRef.current = document.activeElement
+      setSent(false)
+      setOpen(true)
+    }
+    window.addEventListener(BOOKING_EVENT, onOpen)
+    return () => window.removeEventListener(BOOKING_EVENT, onOpen)
+  }, [])
+
+  /* While the dialog is up: the page behind it must not scroll, Escape must close it, and
+     Tab must not walk out of it into the page underneath. */
+  useEffect(() => {
+    if (!open) return
+
+    const { overflow, paddingRight } = document.body.style
+    const gap = window.innerWidth - document.documentElement.clientWidth
+    document.body.style.overflow = 'hidden'
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+      const focusable = dialogRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea',
+      )
+      if (!focusable?.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    firstFieldRef.current?.focus()
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = overflow
+      document.body.style.paddingRight = paddingRight
+    }
+  }, [open, sent])
+
+  const close = () => {
+    setOpen(false)
+    returnFocusRef.current?.focus?.()
+  }
+
+  // No backend yet — swap this for a real POST when the endpoint exists.
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSent(true)
+  }
+
+  if (!open) return null
+
+  return (
+    <div className="booking-backdrop" onMouseDown={(e) => e.target === e.currentTarget && close()}>
+      <div
+        className="booking"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-title"
+        ref={dialogRef}
+      >
+        <button type="button" className="booking-close" onClick={close} aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        {sent ? (
+          <div className="booking-done" role="status">
+            <span className="booking-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <h2 id="booking-title">Request received</h2>
+            <p>
+              We will call you back to confirm a time. If it is urgent, ring the clinic on{' '}
+              <a href={telHref(CONTACT.phones[0])}>{CONTACT.phones[0]}</a>
+              .
+            </p>
+            <button type="button" className="btn btn-primary btn-lg" onClick={close}>
+              <ArrowBadge />
+              Done
+            </button>
+          </div>
+        ) : (
+          <>
+            <p className="pill-label booking-pill">Book an appointment</p>
+            <h2 id="booking-title">Tell us what is bothering you</h2>
+            <p className="booking-lede">
+              Leave your details and the clinic will call you back to confirm a time. Same-week
+              appointments are usually available.
+            </p>
+
+            <form className="booking-form" onSubmit={handleSubmit}>
+              <label>
+                <span>Your name</span>
+                <input ref={firstFieldRef} name="name" type="text" required autoComplete="name" />
+              </label>
+
+              <label>
+                <span>Phone number</span>
+                <input name="phone" type="tel" required autoComplete="tel" placeholder="03xx-xxxxxxx" />
+              </label>
+
+              <label className="booking-wide">
+                <span>What do you need seen?</span>
+                <select name="service" defaultValue="">
+                  <option value="">Not sure yet / general consultation</option>
+                  {SERVICES.map((service) => (
+                    <option key={service.slug} value={service.slug}>
+                      {service.title}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="booking-wide">
+                <span>
+                  Anything else? <em>Optional</em>
+                </span>
+                <textarea name="notes" rows="3" placeholder="When it started, what makes it worse, any scans you already have." />
+              </label>
+
+              <button type="submit" className="btn btn-primary btn-lg booking-submit">
+                <ArrowBadge />
+                Request an appointment
+              </button>
+            </form>
+
+            <p className="booking-alt">
+              Or call the clinic directly:{' '}
+              {CONTACT.phones.slice(0, 2).map((phone, i) => (
+                <span key={phone}>
+                  {i > 0 && ' / '}
+                  <a href={telHref(phone)}>{phone}</a>
+                </span>
+              ))}
+            </p>
+          </>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -439,13 +623,13 @@ export function CallToAction() {
           <p>Same-week consultant appointments. Bring your scans, or we will take them here.</p>
         </div>
         <div className="cta-actions">
-          <a className="btn btn-primary btn-lg" href="tel:+923335128377">
+          <a className="btn btn-primary btn-lg" href={telHref(CONTACT.phones[0])}>
             <ArrowBadge />
             Call the clinic
           </a>
-          <a className="btn btn-outline btn-lg" href="#contact">
+          <button type="button" className="btn btn-outline btn-lg" onClick={openBooking}>
             Request a callback
-          </a>
+          </button>
         </div>
       </div>
     </section>
@@ -458,15 +642,47 @@ export function SiteFooter({ page = 'Home' }) {
   return (
     <footer className="site-footer" id="contact">
       <div className="shell footer-inner">
-        <div className="footer-brand">
-          <span className="brand-mark">
-            <img src={logo} alt="" />
-          </span>
-          <div>
-            <p className="brand-name">Bone Care Centre</p>
-            <p className="footer-tag">Strong bones · Healthy joints · Better life</p>
+        <div className="footer-top">
+          <div className="footer-brand">
+            <span className="brand-mark">
+              <img src={logo} alt="" />
+            </span>
+            <div>
+              <p className="brand-name">Bone Care Centre</p>
+              <p className="footer-tag">Strong bones · Healthy joints · Better life</p>
+            </div>
           </div>
+
+          {/* <address> is the right element for the site owner's own contact details. */}
+          <address className="footer-contact">
+            <p className="footer-line">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+                <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+              </svg>
+              <span>
+                <span className="sr-only">Address: </span>
+                {CONTACT.address.join(', ')}
+              </span>
+            </p>
+
+            <p className="footer-line">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.4 3.6h3.1l1.6 4-2 1.2a12 12 0 0 0 5.4 5.4l1.2-2 4 1.6v3.1a1.7 1.7 0 0 1-1.9 1.7A15.6 15.6 0 0 1 4.7 5.5a1.7 1.7 0 0 1 1.7-1.9Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+              </svg>
+              <span className="footer-phones">
+                <span className="sr-only">Telephone: </span>
+                {CONTACT.phones.map((phone, i) => (
+                  <span key={phone}>
+                    {i > 0 && <i aria-hidden="true">/</i>}
+                    <a href={telHref(phone)}>{phone}</a>
+                  </span>
+                ))}
+              </span>
+            </p>
+          </address>
         </div>
+
         <nav className="footer-nav" aria-label="Footer">
           {NAV.slice(1).map((item) => (
             <a key={item.label} href={linkTo(item)}>

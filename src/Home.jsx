@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ArrowBadge,
+  BookingModal,
   CallToAction,
   DOCTOR,
   PHOTO_SWEEP,
@@ -9,6 +10,7 @@ import {
   SERVICES,
   ServiceIcon,
   SiteFooter,
+  openBooking,
   SiteHeader,
   useScrollProgress,
   VALUES,
@@ -137,10 +139,10 @@ function Hero() {
           </p>
 
           <div className="hero-actions">
-            <a className="btn btn-primary btn-lg" href="#book">
+            <button type="button" className="btn btn-primary btn-lg" onClick={openBooking}>
               <ArrowBadge />
               Book an appointment
-            </a>
+            </button>
             <a className="btn btn-ghost btn-lg" href="#services">
               Explore treatments
             </a>
@@ -476,6 +478,7 @@ export default function Home() {
         <ChooseUs />
         <CallToAction />
       </main>
+      <BookingModal />
       <SiteFooter />
     </div>
   )

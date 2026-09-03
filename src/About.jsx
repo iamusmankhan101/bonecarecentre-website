@@ -1,5 +1,6 @@
 import {
   ArrowBadge,
+  BookingModal,
   CallToAction,
   CLINIC,
   CONTACT,
@@ -7,6 +8,7 @@ import {
   Reveal,
   SiteFooter,
   SiteHeader,
+  telHref,
   VALUES,
   ValueIcon,
 } from './site.jsx'
@@ -127,7 +129,7 @@ export default function About() {
               <ul>
                 {CONTACT.phones.map((phone) => (
                   <li key={phone}>
-                    <a href={`tel:+92${phone.replace(/\D/g, '').replace(/^0/, '')}`}>{phone}</a>
+                    <a href={telHref(phone)}>{phone}</a>
                   </li>
                 ))}
               </ul>
@@ -138,6 +140,7 @@ export default function About() {
         <CallToAction />
       </main>
 
+      <BookingModal />
       <SiteFooter page="About" />
     </div>
   )

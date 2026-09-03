@@ -23,6 +23,8 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.5rem 1.4rem 0.5rem 0.5rem;
+  appearance: none;
+  background: transparent;
   border: 1px solid transparent;
   border-radius: 999px;
   font: inherit;
@@ -1156,6 +1158,63 @@
   gap: 1.75rem;
 }
 
+/* Brand on one side, how to reach the clinic on the other; they stack under 760px. */
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+}
+
+.footer-contact {
+  display: grid;
+  gap: 0.55rem;
+  font-style: normal;
+}
+
+.footer-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.footer-line svg {
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.12em;
+  color: var(--teal-bright);
+}
+
+/* The four numbers wrap as a group with thin separators between them. */
+.footer-phones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.45rem;
+}
+
+.footer-phones i {
+  margin-right: 0.45rem;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-phones a {
+  color: #fff;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-phones a:hover {
+  color: var(--teal-bright);
+}
+
 .footer-brand {
   display: flex;
   align-items: center;
@@ -1390,6 +1449,222 @@
   .cta-actions .btn {
     flex: 1 1 auto;
     justify-content: center;
+  }
+}
+
+/* ---------- booking dialog ---------- */
+@keyframes booking-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.97);
+  }
+}
+
+@keyframes booking-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.booking-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: rgba(4, 24, 46, 0.62);
+  backdrop-filter: blur(6px);
+  animation: booking-fade 0.25s ease both;
+}
+
+.booking {
+  position: relative;
+  width: min(37rem, 100%);
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  padding: 2.2rem;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: 0 50px 90px -40px rgba(4, 24, 46, 0.7);
+  animation: booking-in 0.35s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+.booking-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.booking-close:hover {
+  border-color: rgba(2, 132, 154, 0.45);
+  background: var(--bg-2);
+}
+
+.booking-close svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.booking-pill {
+  display: inline-block;
+  margin: 0 0 1.1rem;
+}
+
+.booking h2 {
+  margin: 0;
+  padding-right: 2.5rem;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.booking-lede {
+  margin: 0.7rem 0 0;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Name and phone share a row on anything wide enough; the rest run full width. */
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+.booking-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.booking-form label em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.booking-wide,
+.booking-submit {
+  grid-column: 1 / -1;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg-2);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.booking-form textarea {
+  resize: vertical;
+}
+
+.booking-form select {
+  appearance: none;
+  padding-right: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b7186' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 1.1rem;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  background: #fff;
+}
+
+.booking-submit {
+  justify-content: center;
+  margin-top: 0.3rem;
+}
+
+.booking-alt {
+  margin: 1.3rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.booking-alt a {
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* ---------- sent ---------- */
+.booking-done {
+  padding: 1.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.booking-tick {
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin: 0 auto 1.3rem;
+  border-radius: 50%;
+  background: rgba(2, 132, 154, 0.12);
+  color: var(--teal);
+}
+
+.booking-tick svg {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.booking-done h2 {
+  padding-right: 0;
+}
+
+.booking-done p {
+  margin: 0.8rem auto 1.8rem;
+  max-width: 34ch;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.booking-done a {
+  font-weight: 700;
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+
+
+@media (max-width: 560px) {
+  .booking {
+    padding: 1.8rem 1.4rem;
+  }
+
+  .booking-form {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1645,6 +1920,15 @@
   .page-head .section-lede,
   .chip-nav a {
     animation: none;
+  }
+
+  .booking-backdrop,
+  .booking {
+    animation: none;
+  }
+
+  .footer-phones a {
+    transition: none;
   }
 
   .rise,

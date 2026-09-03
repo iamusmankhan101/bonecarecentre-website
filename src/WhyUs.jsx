@@ -1,10 +1,12 @@
 import {
   ArrowBadge,
+  BookingModal,
   CallToAction,
   DOCTOR,
   REASONS,
   Reveal,
   SiteFooter,
+  openBooking,
   SiteHeader,
 } from './site.jsx'
 import './home.css'
@@ -52,10 +54,10 @@ export default function WhyUs() {
                 Practising at Iqbal Medical Complex, F-10 Markaz, Islamabad.
               </p>
 
-              <a className="btn btn-primary btn-lg" href="#book">
+              <button type="button" className="btn btn-primary btn-lg" onClick={openBooking}>
                 <ArrowBadge />
                 Book an appointment
-              </a>
+              </button>
             </div>
           </Reveal>
         </section>
@@ -82,6 +84,7 @@ export default function WhyUs() {
         <CallToAction />
       </main>
 
+      <BookingModal />
       <SiteFooter page="Why Us" />
     </div>
   )

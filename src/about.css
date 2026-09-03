@@ -120,12 +120,25 @@
   background: var(--bg-2);
 }
 
-/* Fixed three columns rather than auto-fit: there are exactly six shots, so this is two
-   full rows. auto-fit packed five across the 1280px shell and orphaned the sixth. */
+/* Five shots, so a plain grid always strands one. Four columns over two rows is eight
+   cells; the first shot takes a 2x2 block and the other four take a cell each, which
+   fills it exactly. Every cell keeps the same 4/5 proportion, feature included. */
 .clinic-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
+}
+
+.clinic-grid figure:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* The feature is sized by the two rows it spans rather than by its own ratio, so its
+   image has to fill whatever height that comes to. */
+.clinic-grid figure:first-child img {
+  aspect-ratio: auto;
+  height: 100%;
 }
 
 .clinic-grid figure {
@@ -163,15 +176,35 @@
   pointer-events: none;
 }
 
+/* Two columns is six cells over three rows: the feature lies down across the top row and
+   the other four fill the two below it. */
 @media (max-width: 900px) {
   .clinic-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .clinic-grid figure:first-child {
+    grid-row: span 1;
+  }
+
+  .clinic-grid figure:first-child img {
+    aspect-ratio: 16 / 10;
+    height: auto;
+  }
 }
 
+/* Single column: the feature has nothing to span, so it goes back to matching the rest. */
 @media (max-width: 560px) {
   .clinic-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clinic-grid figure:first-child {
+    grid-column: span 1;
+  }
+
+  .clinic-grid figure:first-child img {
+    aspect-ratio: 4 / 5;
   }
 }
 

@@ -1,10 +1,12 @@
 import {
   ArrowBadge,
+  BookingModal,
   CallToAction,
   Reveal,
   SERVICES,
   ServiceIcon,
   SiteFooter,
+  openBooking,
   SiteHeader,
 } from './site.jsx'
 import './home.css'
@@ -61,10 +63,10 @@ export default function Services() {
                         <li key={point}>{point}</li>
                       ))}
                     </ul>
-                    <a className="btn btn-outline-teal" href="#book">
+                    <button type="button" className="btn btn-outline-teal" onClick={openBooking}>
                       <ArrowBadge />
                       Book this treatment
-                    </a>
+                    </button>
                   </div>
                 </Reveal>
               ))}
@@ -75,6 +77,7 @@ export default function Services() {
         <CallToAction />
       </main>
 
+      <BookingModal />
       <SiteFooter page="Services" />
     </div>
   )
