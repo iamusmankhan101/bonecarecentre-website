@@ -53,12 +53,29 @@ const VALUES = [
   },
 ]
 
+/* Every line here is checkable against Dr. Sheikh's own qualifications rather than
+   the soft claims any clinic could make. */
 const REASONS = [
-  'Consultant-led from your first appointment',
-  'Imaging, surgery and rehab under one roof',
-  'An operation only when it is genuinely the answer',
-  'Recovery plans built around your week, not ours',
-  'A team that already knows your history',
+  {
+    title: 'Trained in Australia',
+    detail: 'A D. Orth (Aust) on top of MBBS and MS Orth — overseas orthopaedic training few clinics here can offer.',
+  },
+  {
+    title: 'A PhD in sports medicine',
+    detail: 'Research-level grounding in how injuries actually heal, not just how they are operated on.',
+  },
+  {
+    title: 'Pain treated as its own specialty',
+    detail: 'A Master in Pain Medicine, which is why nerve blocks and PRP are core practice here rather than a sideline.',
+  },
+  {
+    title: 'Teaches the next generation',
+    detail: 'Professor and Consultant at Islamic International Medical College.',
+  },
+  {
+    title: 'One surgeon, start to finish',
+    detail: 'The consultant who assesses you is the one who operates and the one who sees you afterwards.',
+  },
 ]
 
 const STATS = [
@@ -683,9 +700,12 @@ function ChooseUs() {
         <div className="choose-grid">
           <ol className="reasons" ref={listRef}>
             {REASONS.map((reason, i) => (
-              <li key={reason} style={{ '--i': i }}>
+              <li key={reason.title} style={{ '--i': i }}>
                 <span className="reason-num">{String(i + 1).padStart(2, '0')}/</span>
-                <span>{reason}</span>
+                <span className="reason-body">
+                  <span className="reason-title">{reason.title}</span>
+                  <span className="reason-detail">{reason.detail}</span>
+                </span>
               </li>
             ))}
           </ol>

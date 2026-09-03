@@ -987,30 +987,50 @@
   display: flex;
   align-items: baseline;
   gap: 1rem;
-  padding: 1.5rem 0;
+  padding: 1.35rem 0;
   border-bottom: 1px solid var(--line);
-  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
   opacity: var(--p);
   transform: translateY(calc((1 - var(--p)) * 1.25rem));
-  transition: opacity 0.3s linear, transform 0.3s linear, color 0.2s ease;
+  transition: opacity 0.3s linear, transform 0.3s linear;
 }
 
 .reasons li:first-child {
   padding-top: 0;
 }
 
-.reasons li:hover {
+.reason-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* The claim carries the weight; the evidence for it sits underneath at body size, so
+   the column reads as five short arguments rather than a contents page. */
+.reason-title {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.reasons li:hover .reason-title {
   color: var(--teal);
+}
+
+.reason-detail {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.55;
+  color: var(--muted);
 }
 
 .reason-num {
   flex: none;
   /* Fixed width and tabular figures, or the titles step in and out by a pixel or two. */
   min-width: 2.4rem;
-  font-size: 0.95em;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: #9db0c0;
