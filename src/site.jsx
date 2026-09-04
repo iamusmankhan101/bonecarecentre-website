@@ -98,10 +98,10 @@ export const DOCTOR = {
    argument in full on /why-us. */
 export const REASONS = [
   {
-    slug: 'trained-in-australia',
-    title: 'Trained in Australia',
+    slug: 'trained-in-austria',
+    title: 'Trained in Austria',
     detail: 'A D. Orth (Aust) on top of MBBS and MS Orth, overseas orthopaedic training few clinics here can offer.',
-    more: 'The Diploma in Orthopaedics was taken in Australia, on top of an MBBS and an MS in Orthopaedics earned here. It means the standard you are treated to was set in two health systems rather than one, and that techniques arrive in this clinic without waiting to become common locally.',
+    more: 'The Diploma in Orthopaedics was taken in Austria, on top of an MBBS and an MS in Orthopaedics earned here. It means the standard you are treated to was set in two health systems rather than one, and that techniques arrive in this clinic without waiting to become common locally.',
   },
   {
     slug: 'phd-sports-medicine',
