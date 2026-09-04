@@ -4,6 +4,9 @@ import {
   CallToAction,
   CLINIC,
   CONTACT,
+  LOCATIONS,
+  mapEmbed,
+  mapHref,
   DOCTOR,
   Reveal,
   SiteFooter,
@@ -29,8 +32,9 @@ export default function About() {
             <h1>A specialist clinic, not a department you get passed around</h1>
             <p className="section-lede">
               Bone Care Centre is the orthopaedic and pain practice of Dr. Sohail Iqbal Sheikh,
-              at Iqbal Medical Complex in F-10 Markaz, Islamabad. One consultant, one plan, and
-              a clinic small enough that you are not a file number in it.
+              seeing patients at Iqbal Medical Complex in F-10 Markaz, Islamabad, and at Bone
+              Care Centre on Main Saidpur Road, Rawalpindi. One consultant, one plan, and a
+              clinic small enough that you are not a file number in it.
             </p>
           </div>
         </section>
@@ -113,28 +117,56 @@ export default function About() {
         </section>
 
         <section className="find-us">
-          <Reveal className="shell find-us-inner stagger" prop="--reveal">
-            <div style={{ '--i': 0 }}>
-              <p className="pill-label">Find Us</p>
-              <h2>Iqbal Medical Complex</h2>
-              <address>
-                {CONTACT.address.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </address>
-            </div>
+          <div className="shell">
+            <p className="pill-label">Find Us</p>
+            <h2>Two clinics, one consultant</h2>
 
-            <div className="phone-list" style={{ '--i': 1 }}>
-              <p className="phone-label">Call the clinic</p>
-              <ul>
-                {CONTACT.phones.map((phone) => (
-                  <li key={phone}>
-                    <a href={telHref(phone)}>{phone}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+            <Reveal className="find-us-grid stagger" prop="--reveal">
+              {LOCATIONS.map((location, i) => (
+                <div className="location" key={location.name} style={{ '--i': i }}>
+                  <div className="location-map">
+                    <iframe
+                      src={mapEmbed(location.map)}
+                      title={`Map showing ${location.name}`}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+
+                  <div className="location-body">
+                    <span className="location-num">{String(i + 1).padStart(2, '0')}</span>
+                    <h3>{location.name}</h3>
+                    <address>
+                      {location.lines.map((line) => (
+                        <span key={line}>{line}</span>
+                      ))}
+                    </address>
+                    <a
+                      className="btn btn-outline-teal"
+                      href={mapHref(location.map)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <ArrowBadge />
+                      Get directions
+                    </a>
+                  </div>
+                </div>
+              ))}
+
+              <div className="phone-list" style={{ '--i': LOCATIONS.length }}>
+                <p className="phone-label">Call either clinic</p>
+                <ul>
+                  {CONTACT.phones.map((phone) => (
+                    <li key={phone}>
+                      <a href={telHref(phone)}>{phone}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         <CallToAction />

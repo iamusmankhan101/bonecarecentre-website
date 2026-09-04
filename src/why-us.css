@@ -70,7 +70,12 @@
 .consultant-note {
   margin: 1.6rem 0 2rem;
   font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--muted);
+}
+
+.consultant-note strong {
+  color: var(--ink);
 }
 
 /* No icon in this page's left rail, so the number carries it on its own. */

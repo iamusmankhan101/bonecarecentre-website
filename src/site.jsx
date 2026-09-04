@@ -54,8 +54,31 @@ export const CLINIC = [
 export const telHref = (phone) => `tel:+92${phone.replace(/\D/g, '').replace(/^0/, '')}`
 
 /* Straight off the clinic banner. */
+/* Two clinics, one consultant. The order here is the order they appear everywhere. */
+export const LOCATIONS = [
+  {
+    name: 'Iqbal Medical Complex',
+    lines: ['F-10 Markaz', 'Islamabad'],
+    city: 'Islamabad',
+    map: 'Iqbal Medical Complex, F-10 Markaz, Islamabad',
+  },
+  {
+    name: 'Bone Care Centre',
+    lines: ['Al Hameed Marriage Hall, Main Saidpur Road', 'Satellite Block E Town, Rawalpindi 46000'],
+    city: 'Rawalpindi',
+    map: 'Al Hameed Marriage Hall, Main Saidpur Rd, Satellite Block E Town, Rawalpindi, 46000',
+  },
+]
+
+/* Google Maps by plain address query, so neither of these needs an API key: the first
+   opens the app or site with directions, the second is the embeddable map. */
+export const mapHref = (query) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`
+
+export const mapEmbed = (query) =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`
+
 export const CONTACT = {
-  address: ['Iqbal Medical Complex', 'F-10 Markaz, Islamabad'],
   phones: ['0333-5128377', '0333-5118234', '0345-4396533', '0333-5618753'],
   whatsapp: '0331-5118333',
 }
@@ -704,16 +727,26 @@ export function SiteFooter({ page = 'Home' }) {
 
           {/* <address> is the right element for the site owner's own contact details. */}
           <address className="footer-contact">
-            <p className="footer-line">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-                <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
-              </svg>
-              <span>
-                <span className="sr-only">Address: </span>
-                {CONTACT.address.join(', ')}
-              </span>
-            </p>
+            <div className="footer-locations">
+              {LOCATIONS.map((location) => (
+                <p className="footer-line" key={location.name}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+                    <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+                  </svg>
+                  <a
+                    href={mapHref(location.map)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="footer-loc"
+                  >
+                    <span className="sr-only">Address, opens in Google Maps: </span>
+                    <strong>{location.name}</strong>
+                    {location.lines.join(', ')}
+                  </a>
+                </p>
+              ))}
+            </div>
 
             <p className="footer-line">
               <svg viewBox="0 0 24 24" aria-hidden="true">

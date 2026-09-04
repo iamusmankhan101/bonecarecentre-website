@@ -3,6 +3,7 @@ import {
   BookingModal,
   CallToAction,
   DOCTOR,
+  LOCATIONS,
   REASONS,
   Reveal,
   SiteFooter,
@@ -51,7 +52,14 @@ export default function WhyUs() {
               </ul>
 
               <p className="consultant-note">
-                Practising at Iqbal Medical Complex, F-10 Markaz, Islamabad.
+                Practising at{' '}
+                {LOCATIONS.map((location, i) => (
+                  <span key={location.name}>
+                    {i > 0 && ' and at '}
+                    <strong>{location.name}</strong>, {location.lines.join(', ')}
+                  </span>
+                ))}
+                .
               </p>
 
               <button type="button" className="btn btn-primary btn-lg" onClick={openBooking}>

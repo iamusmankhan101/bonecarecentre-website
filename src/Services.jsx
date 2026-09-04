@@ -26,8 +26,9 @@ export default function Services() {
             <h1>Orthopaedic and pain care, from the first X-ray to the last review</h1>
             <p className="section-lede">
               Everything below is carried out by Dr. Sohail Iqbal Sheikh, an orthopaedic surgeon
-              with a Master in Pain Medicine, at Iqbal Medical Complex in F-10 Markaz. Surgery is
-              only ever one of the options on the table.
+              with a Master in Pain Medicine, at both clinics: Iqbal Medical Complex in F-10
+              Markaz, Islamabad, and Bone Care Centre in Rawalpindi. Surgery is only ever one of
+              the options on the table.
             </p>
 
             {/* A dedicated page for eleven services is long, so the index is a way in
