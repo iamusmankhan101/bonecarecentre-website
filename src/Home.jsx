@@ -35,6 +35,7 @@ const HEADLINE = ['Strong Bones,', 'Healthy Joints.']
 
 const STATS = [
   ['25+', 'Years of practice'],
+  ['12+', 'Specialists on team'],
   ['25,000+', 'Patients treated'],
   ['98%', 'Would recommend us'],
 ]
