@@ -34,9 +34,8 @@ const CHIPS = ['Orthopaedics', 'Physiotherapy', 'Spine Care', 'Sports Injury', '
 const HEADLINE = ['Strong Bones,', 'Healthy Joints.']
 
 const STATS = [
-  ['15+', 'Years of practice'],
+  ['25+', 'Years of practice'],
   ['25,000+', 'Patients treated'],
-  ['12', 'Specialist consultants'],
   ['98%', 'Would recommend us'],
 ]
 

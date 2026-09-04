@@ -552,9 +552,10 @@
   padding: 3rem 0;
 }
 
+/* One column per stat, so removing or adding one does not leave a gap in the row. */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: 1.5rem;
 }
 
@@ -1364,10 +1365,6 @@
       rgba(4, 24, 46, 0.88) 78%,
       rgba(4, 24, 46, 0.95) 100%
     );
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .values-grid {
