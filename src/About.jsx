@@ -5,6 +5,7 @@ import {
   CLINIC,
   CONTACT,
   LOCATIONS,
+  hoursLabel,
   mapEmbed,
   mapHref,
   DOCTOR,
@@ -150,7 +151,7 @@ export default function About() {
                       </svg>
                       <span>
                         <span className="sr-only">Clinic hours: </span>
-                        {location.hours}
+                        {hoursLabel(location)}
                       </span>
                     </p>
                     <a

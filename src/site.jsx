@@ -60,17 +60,48 @@ export const LOCATIONS = [
     name: 'Iqbal Medical Complex',
     lines: ['F-10 Markaz', 'Islamabad'],
     city: 'Islamabad',
-    hours: '12:00 pm to 2:00 pm',
+    opens: '12:00',
+    closes: '14:00',
     map: 'Iqbal Medical Complex, F-10 Markaz, Islamabad',
   },
   {
     name: 'Bone Care Centre',
     lines: ['Al Hameed Marriage Hall, Main Saidpur Road', 'Satellite Block E Town, Rawalpindi 46000'],
     city: 'Rawalpindi',
-    hours: '5:30 pm to 9:30 pm',
+    opens: '17:30',
+    closes: '21:30',
     map: 'Al Hameed Marriage Hall, Main Saidpur Rd, Satellite Block E Town, Rawalpindi, 46000',
   },
 ]
+
+/* Appointments run back to back at a fixed length, so the bookable times are derived
+   from each clinic's opening hours rather than listed by hand. Change SLOT_MINUTES or a
+   clinic's opens/closes and the dropdown, the footer and the About page all follow. */
+export const SLOT_MINUTES = 15
+
+const toMinutes = (hhmm) => {
+  const [h, m] = hhmm.split(':').map(Number)
+  return h * 60 + m
+}
+
+const formatTime = (mins) => {
+  const h24 = Math.floor(mins / 60)
+  const h = h24 % 12 === 0 ? 12 : h24 % 12
+  return `${h}:${String(mins % 60).padStart(2, '0')} ${h24 < 12 ? 'am' : 'pm'}`
+}
+
+export const hoursLabel = (location) =>
+  `${formatTime(toMinutes(location.opens))} to ${formatTime(toMinutes(location.closes))}`
+
+/* Only whole slots that finish before closing time are offered. */
+export const slotsFor = (location) => {
+  const close = toMinutes(location.closes)
+  const out = []
+  for (let t = toMinutes(location.opens); t + SLOT_MINUTES <= close; t += SLOT_MINUTES) {
+    out.push(formatTime(t))
+  }
+  return out
+}
 
 /* Google Maps by plain address query, so neither of these needs an API key: the first
    opens the app or site with directions, the second is the embeddable map. */
@@ -506,6 +537,10 @@ function WhatsAppIcon() {
 export function BookingModal() {
   const [open, setOpen] = useState(false)
   const [sent, setSent] = useState(false)
+  /* Controlled, because switching clinic has to rebuild the slot list under it and clear
+     whatever time was picked from the old one. */
+  const [clinic, setClinic] = useState(LOCATIONS[0].name)
+  const [slot, setSlot] = useState('')
   const dialogRef = useRef(null)
   const firstFieldRef = useRef(null)
   const returnFocusRef = useRef(null)
@@ -514,6 +549,8 @@ export function BookingModal() {
     const onOpen = () => {
       returnFocusRef.current = document.activeElement
       setSent(false)
+      setClinic(LOCATIONS[0].name)
+      setSlot('')
       setOpen(true)
     }
     window.addEventListener(BOOKING_EVENT, onOpen)
@@ -561,6 +598,8 @@ export function BookingModal() {
     }
   }, [open, sent])
 
+  const selectedClinic = LOCATIONS.find((item) => item.name === clinic) ?? LOCATIONS[0]
+
   const close = () => {
     setOpen(false)
     returnFocusRef.current?.focus?.()
@@ -576,7 +615,7 @@ export function BookingModal() {
     const slug = data.get('service')
     const service = SERVICES.find((item) => item.slug === slug)?.title ?? 'General consultation'
     const notes = String(data.get('notes') ?? '').trim()
-    const clinic = LOCATIONS.find((item) => item.name === data.get('location')) ?? LOCATIONS[0]
+    const picked = String(data.get('slot') ?? '')
 
     const lines = [
       'New appointment request',
@@ -584,7 +623,10 @@ export function BookingModal() {
       `Name: ${String(data.get('name') ?? '').trim()}`,
       `Phone: ${String(data.get('phone') ?? '').trim()}`,
       `For: ${service}`,
-      `Clinic: ${clinic.name}, ${clinic.city} (${clinic.hours})`,
+      `Clinic: ${selectedClinic.name}, ${selectedClinic.city}`,
+      picked
+        ? `Time: ${picked} (${SLOT_MINUTES} min)`
+        : `Time: any time within ${hoursLabel(selectedClinic)}`,
     ]
     if (notes) lines.push(`Notes: ${notes}`)
 
@@ -650,10 +692,31 @@ export function BookingModal() {
 
               <label className="booking-wide">
                 <span>Which clinic suits you?</span>
-                <select name="location" defaultValue={LOCATIONS[0].name}>
+                <select
+                  name="location"
+                  value={clinic}
+                  onChange={(e) => {
+                    setClinic(e.target.value)
+                    setSlot('')
+                  }}
+                >
                   {LOCATIONS.map((location) => (
                     <option key={location.name} value={location.name}>
-                      {location.name}, {location.city} ({location.hours})
+                      {location.name}, {location.city} ({hoursLabel(location)})
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="booking-wide">
+                <span>
+                  Preferred time <em>{SLOT_MINUTES} minutes each</em>
+                </span>
+                <select name="slot" value={slot} onChange={(e) => setSlot(e.target.value)}>
+                  <option value="">Any time within clinic hours</option>
+                  {slotsFor(selectedClinic).map((time) => (
+                    <option key={time} value={time}>
+                      {time}
                     </option>
                   ))}
                 </select>
@@ -762,7 +825,7 @@ export function SiteFooter({ page = 'Home' }) {
                     </a>
                     <span className="footer-hours">
                       <span className="sr-only">Clinic hours: </span>
-                      {location.hours}
+                      {hoursLabel(location)}
                     </span>
                   </span>
                 </p>
