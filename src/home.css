@@ -1107,9 +1107,19 @@
 }
 
 .footer-loc {
+  display: block;
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
+}
+
+/* Hours sit under the address rather than inside the map link, so the whole line does
+   not become clickable. */
+.footer-hours {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--teal-bright);
 }
 
 .footer-loc:hover,

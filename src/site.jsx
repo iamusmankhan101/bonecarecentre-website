@@ -60,12 +60,14 @@ export const LOCATIONS = [
     name: 'Iqbal Medical Complex',
     lines: ['F-10 Markaz', 'Islamabad'],
     city: 'Islamabad',
+    hours: '12:00 pm to 2:00 pm',
     map: 'Iqbal Medical Complex, F-10 Markaz, Islamabad',
   },
   {
     name: 'Bone Care Centre',
     lines: ['Al Hameed Marriage Hall, Main Saidpur Road', 'Satellite Block E Town, Rawalpindi 46000'],
     city: 'Rawalpindi',
+    hours: '5:30 pm to 9:30 pm',
     map: 'Al Hameed Marriage Hall, Main Saidpur Rd, Satellite Block E Town, Rawalpindi, 46000',
   },
 ]
@@ -574,6 +576,7 @@ export function BookingModal() {
     const slug = data.get('service')
     const service = SERVICES.find((item) => item.slug === slug)?.title ?? 'General consultation'
     const notes = String(data.get('notes') ?? '').trim()
+    const clinic = LOCATIONS.find((item) => item.name === data.get('location')) ?? LOCATIONS[0]
 
     const lines = [
       'New appointment request',
@@ -581,6 +584,7 @@ export function BookingModal() {
       `Name: ${String(data.get('name') ?? '').trim()}`,
       `Phone: ${String(data.get('phone') ?? '').trim()}`,
       `For: ${service}`,
+      `Clinic: ${clinic.name}, ${clinic.city} (${clinic.hours})`,
     ]
     if (notes) lines.push(`Notes: ${notes}`)
 
@@ -642,6 +646,17 @@ export function BookingModal() {
               <label>
                 <span>Phone number</span>
                 <input name="phone" type="tel" required autoComplete="tel" placeholder="03xx-xxxxxxx" />
+              </label>
+
+              <label className="booking-wide">
+                <span>Which clinic suits you?</span>
+                <select name="location" defaultValue={LOCATIONS[0].name}>
+                  {LOCATIONS.map((location) => (
+                    <option key={location.name} value={location.name}>
+                      {location.name}, {location.city} ({location.hours})
+                    </option>
+                  ))}
+                </select>
               </label>
 
               <label className="booking-wide">
@@ -734,16 +749,22 @@ export function SiteFooter({ page = 'Home' }) {
                     <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
                     <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
                   </svg>
-                  <a
-                    href={mapHref(location.map)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="footer-loc"
-                  >
-                    <span className="sr-only">Address, opens in Google Maps: </span>
-                    <strong>{location.name}</strong>
-                    {location.lines.join(', ')}
-                  </a>
+                  <span>
+                    <a
+                      href={mapHref(location.map)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="footer-loc"
+                    >
+                      <span className="sr-only">Address, opens in Google Maps: </span>
+                      <strong>{location.name}</strong>
+                      {location.lines.join(', ')}
+                    </a>
+                    <span className="footer-hours">
+                      <span className="sr-only">Clinic hours: </span>
+                      {location.hours}
+                    </span>
+                  </span>
                 </p>
               ))}
             </div>

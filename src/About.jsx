@@ -142,6 +142,17 @@ export default function About() {
                         <span key={line}>{line}</span>
                       ))}
                     </address>
+
+                    <p className="location-hours">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" strokeWidth="1.7" />
+                        <path d="M12 7.4V12l3.1 1.9" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>
+                        <span className="sr-only">Clinic hours: </span>
+                        {location.hours}
+                      </span>
+                    </p>
                     <a
                       className="btn btn-outline-teal"
                       href={mapHref(location.map)}

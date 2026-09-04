@@ -249,6 +249,22 @@
   padding: 1.5rem 1.6rem 1.7rem;
 }
 
+.location-hours {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.location-hours svg {
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
 .location-body .btn {
   margin-top: 1.2rem;
   background: #fff;
