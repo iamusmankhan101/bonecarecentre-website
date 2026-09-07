@@ -25,7 +25,7 @@ const HERO_IMAGE = '/hero-room.jpg'
 /* One entry per section that actually exists on the page — every href here has a
    matching id below, so nothing in the nav scrolls to nowhere. */
 const ABOUT_TEXT =
-  'We believe movement is the measure of a good life, and we are here to keep yours steady. ' +
+  'We believe movement is the measure of a good life, and we are here to keep you steady. ' +
   'Whether you come to us for a second opinion, a stubborn ache, or the joint replacement ' +
   'you have been putting off.'
 
